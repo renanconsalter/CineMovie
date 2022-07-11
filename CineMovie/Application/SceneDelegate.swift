@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let rootViewController = ViewController()
+        let rootViewController = TabBarViewController()
         
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -55,3 +55,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 }
+
