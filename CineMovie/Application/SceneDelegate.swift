@@ -19,10 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let rootViewModel = ListTopRatedMoviesViewModel()
-        let rootViewController = ListTopRatedMoviesViewController(
-            viewModel: rootViewModel
-        )
+        let rootViewController = TabBarViewController()
         
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
@@ -58,3 +55,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 }
+
