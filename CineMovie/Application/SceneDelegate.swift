@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let rootViewController = ViewController()
+        let rootViewModel = ListTopRatedMoviesViewModel()
+        let rootViewController = ListTopRatedMoviesViewController(
+            viewModel: rootViewModel
+        )
         
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
