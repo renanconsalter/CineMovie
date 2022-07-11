@@ -9,6 +9,7 @@ import Foundation
 
 protocol ListTopRatedMoviesViewModelDelegate: AnyObject {
     func didFindTopRatedMovies()
+    func didSelectMovie(movie: Movie)
     func didFail(error: ErrorHandler)
 }
 
@@ -29,6 +30,11 @@ final class ListTopRatedMoviesViewModel {
     
     func numberOfRows() -> Int {
         return movies.count
+    }
+    
+    func didSelectRow(at indexPath: IndexPath) {
+        let movie = movies[indexPath.row]
+        self.delegate?.didSelectMovie(movie: movie)
     }
     
     func loadTopRatedMovies() {

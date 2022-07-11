@@ -84,6 +84,7 @@ extension ListTopRatedMoviesViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -127,6 +128,13 @@ extension ListTopRatedMoviesViewController: UIScrollViewDelegate {
 
 // MARK: - ListTopRatedMoviesViewModelDelegate Methods
 extension ListTopRatedMoviesViewController: ListTopRatedMoviesViewModelDelegate {
+    func didSelectMovie(movie: Movie) {
+        let detailsVC = MovieDetailsViewController(
+            viewModel: MovieDetailsViewModel(movie: movie)
+        )
+        present(detailsVC, animated: true)
+    }
+    
     func didFindTopRatedMovies() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
