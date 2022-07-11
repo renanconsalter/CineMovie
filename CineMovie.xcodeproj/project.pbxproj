@@ -24,6 +24,7 @@
 		4F6FD789287C715900E6D9C8 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FD788287C715900E6D9C8 /* Movie.swift */; };
 		4F6FD78B287C716800E6D9C8 /* MovieGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FD78A287C716800E6D9C8 /* MovieGenres.swift */; };
 		4F6FD78E287C718F00E6D9C8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FD78D287C718F00E6D9C8 /* Constants.swift */; };
+		4F6FD791287C720900E6D9C8 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FD790287C720900E6D9C8 /* MoviesService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		4F6FD788287C715900E6D9C8 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		4F6FD78A287C716800E6D9C8 /* MovieGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenres.swift; sourceTree = "<group>"; };
 		4F6FD78D287C718F00E6D9C8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4F6FD790287C720900E6D9C8 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				4F6FD775287C6F4900E6D9C8 /* Network */,
 				4F6FD77F287C70AB00E6D9C8 /* Endpoint */,
 				4F6FD773287C6E4D00E6D9C8 /* Resources */,
+				4F6FD78F287C71F800E6D9C8 /* Services */,
 				4F6FD78C287C717F00E6D9C8 /* Utils */,
 				4F6FD747287C6D4F00E6D9C8 /* ViewController.swift */,
 				4F6FD751287C6D5200E6D9C8 /* Info.plist */,
@@ -205,6 +208,14 @@
 				4F6FD78D287C718F00E6D9C8 /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4F6FD78F287C71F800E6D9C8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4F6FD790287C720900E6D9C8 /* MoviesService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +358,7 @@
 				4F6FD746287C6D4F00E6D9C8 /* SceneDelegate.swift in Sources */,
 				4F6FD78B287C716800E6D9C8 /* MovieGenres.swift in Sources */,
 				4F6FD77C287C6FDE00E6D9C8 /* HttpClient.swift in Sources */,
+				4F6FD791287C720900E6D9C8 /* MoviesService.swift in Sources */,
 				4F6FD77A287C6FBF00E6D9C8 /* Endpoint.swift in Sources */,
 				4F6FD78E287C718F00E6D9C8 /* Constants.swift in Sources */,
 			);
