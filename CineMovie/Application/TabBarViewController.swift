@@ -18,6 +18,7 @@ class TabBarViewController: UITabBarController {
     private func setupViewControllers() {
         let topRatedMoviesViewModel = ListTopRatedMoviesViewModel()
         let popularMoviesViewModel = ListPopularMoviesViewModel()
+        let searchMoviesViewModel = SearchMoviesViewModel()
         
         let topRatedVC = createNavigationController(
             for: ListTopRatedMoviesViewController(viewModel: topRatedMoviesViewModel),
@@ -31,7 +32,13 @@ class TabBarViewController: UITabBarController {
             image: UIImage(systemName: Constants.Icons.film)
         )
         
-        viewControllers = [topRatedVC, popularMoviesVC]
+        let searchMoviesVC = createNavigationController(
+            for: SearchMoviesViewController(viewModel: searchMoviesViewModel),
+            title: Constants.Menus.search,
+            image: UIImage(systemName: Constants.Icons.search)
+        )
+        
+        viewControllers = [topRatedVC, popularMoviesVC, searchMoviesVC]
     }
     
     private func createNavigationController(for rootViewController: UIViewController,
