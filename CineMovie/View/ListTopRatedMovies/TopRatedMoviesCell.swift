@@ -85,27 +85,19 @@ final class TopRatedMoviesCell: UITableViewCell {
             movieImage.heightAnchor.constraint(equalToConstant: imageSize),
             movieImage.widthAnchor.constraint(equalToConstant: imageSize),
             movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            movieImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            movieImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
             titleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             titleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: movieImage.topAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: movieImage.topAnchor),
+            
             subtitleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             subtitleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor),
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding)
-        ])
-        
-        NSLayoutConstraint.activate([
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
+            
             starImgView.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
-            starImgView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding)
-        ])
-        
-        NSLayoutConstraint.activate([
+            starImgView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding),
+            
             ratingLabel.leadingAnchor.constraint(equalTo: starImgView.trailingAnchor, constant: 3),
             ratingLabel.centerYAnchor.constraint(equalTo: starImgView.centerYAnchor)
         ])
