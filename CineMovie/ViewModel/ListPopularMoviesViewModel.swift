@@ -43,10 +43,9 @@ final class ListPopularMoviesViewModel {
         
         isLoading = true
         
-        service.getPopularMovies(page: currentPage) { result in
-            
+        service.getPopularMovies(page: currentPage) { [weak self] result in
+            guard let self = self else { return }
             self.isLoading = false
-            
             switch result {
             case .success(let popularMovies):
                 self.movies.append(contentsOf: popularMovies.results)

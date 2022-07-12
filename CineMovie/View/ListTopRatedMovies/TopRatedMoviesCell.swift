@@ -10,8 +10,8 @@ import UIKit
 final class TopRatedMoviesCell: UITableViewCell {
     
     // MARK: - Views
-    private let movieImage: UIImageView = {
-        let imageView = UIImageView()
+    private let movieImage: DownloadImageView = {
+        let imageView = DownloadImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -112,7 +112,7 @@ final class TopRatedMoviesCell: UITableViewCell {
     }
     
     func configure(viewModel: TopRatedMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.imageURL)
+        movieImage.loadImage(from: URL(string: viewModel.imageURL))
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         ratingLabel.text = viewModel.rating

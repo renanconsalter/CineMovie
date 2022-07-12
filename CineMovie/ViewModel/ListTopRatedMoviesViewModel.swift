@@ -43,10 +43,9 @@ final class ListTopRatedMoviesViewModel {
         
         isLoading = true
         
-        service.getTopRatedMovies(page: currentPage) { result in
-            
+        service.getTopRatedMovies(page: currentPage) { [weak self] result in
+            guard let self = self else { return }
             self.isLoading = false
-            
             switch result {
             case .success(let topRatedMovies):
                 self.movies.append(contentsOf: topRatedMovies.results)

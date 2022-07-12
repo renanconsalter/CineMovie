@@ -10,8 +10,8 @@ import UIKit
 final class PopularMoviesCell: UICollectionViewCell {
     
     // MARK: - View
-    private let movieImage: UIImageView = {
-        let imageView = UIImageView()
+    private let movieImage: DownloadImageView = {
+        let imageView = DownloadImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -39,6 +39,6 @@ final class PopularMoviesCell: UICollectionViewCell {
     }
 
     func configure(viewModel: PopularMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.imageURL)
+        movieImage.loadImage(from: URL(string: viewModel.imageURL))
     }
 }
