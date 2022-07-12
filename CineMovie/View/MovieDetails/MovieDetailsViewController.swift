@@ -128,49 +128,35 @@ final class MovieDetailsViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
+            
             imgView.heightAnchor.constraint(equalToConstant: imageHeight),
             imgView.widthAnchor.constraint(equalToConstant: imageWidth),
             imgView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             imgView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
+            
             closeButton.heightAnchor.constraint(equalToConstant: iconSize),
             closeButton.widthAnchor.constraint(equalToConstant: iconSize),
             closeButton.topAnchor.constraint(equalTo: imgView.topAnchor, constant: padding),
-            closeButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: -padding)
-        ])
-        
-        NSLayoutConstraint.activate([
+            closeButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: -padding),
+            
             titleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             titleLabel.topAnchor.constraint(equalTo: imgView.bottomAnchor, constant: padding),
-            titleLabel.leadingAnchor.constraint(equalTo: imgView.leadingAnchor, constant: padding)
-        ])
-        
-        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: imgView.leadingAnchor, constant: padding),
+            
             subtitleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
-            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
             overviewLabel.widthAnchor.constraint(equalToConstant: labelSize),
             overviewLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding),
-            overviewLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            overviewLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
+            
             ratingLabel.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: padding),
-            ratingLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            ratingLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
+            
             scoreLabel.leadingAnchor.constraint(equalTo: ratingLabel.trailingAnchor, constant: padding),
             scoreLabel.topAnchor.constraint(equalTo: ratingLabel.topAnchor),
-            scoreLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding)
+            scoreLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -padding),
         ])
     }
     

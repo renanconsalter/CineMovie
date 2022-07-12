@@ -76,22 +76,16 @@ final class SearchMoviesViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
             emptyStateView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyStateView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            emptyStateView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+            
             emptyStateImageView.widthAnchor.constraint(equalToConstant: imageSize),
             emptyStateImageView.heightAnchor.constraint(equalToConstant: imageSize),
             emptyStateImageView.centerXAnchor.constraint(equalTo: emptyStateView.centerXAnchor),
-            emptyStateImageView.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            emptyStateImageView.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor),
+            
             emptyStateLabel.centerXAnchor.constraint(equalTo: emptyStateImageView.centerXAnchor),
             emptyStateLabel.topAnchor.constraint(equalTo: emptyStateImageView.bottomAnchor, constant: padding)
         ])

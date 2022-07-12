@@ -2,7 +2,7 @@ import UIKit
 
 private let imageCache = NSCache<NSString, UIImage>()
 
-public class DownloadImageView: UIImageView {
+class DownloadImageView: UIImageView {
     private var imageUrl: URL?
 
     private func getData(from url: URL,
@@ -16,7 +16,7 @@ public class DownloadImageView: UIImageView {
             .resume()
     }
 
-    public func downloadImage(from url: URL?, placeHolder: UIImage? = nil) {
+    func loadImage(from url: URL?, placeHolder: UIImage? = nil) {
         guard let url = url else {
             return
         }
