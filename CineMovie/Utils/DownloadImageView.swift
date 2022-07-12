@@ -16,7 +16,7 @@ public class DownloadImageView: UIImageView {
             .resume()
     }
 
-    public func downloadImage(from url: URL?, placeHolder: UIImage? = nil) {
+    public func loadImage(from url: URL?, placeHolder: UIImage? = nil) {
         guard let url = url else {
             return
         }
