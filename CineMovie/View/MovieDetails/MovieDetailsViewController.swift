@@ -18,8 +18,8 @@ final class MovieDetailsViewController: UIViewController {
         return scrollView
     }()
     
-    private let imgView: UIImageView = {
-        let imageView = UIImageView()
+    private let imgView: DownloadImageView = {
+        let imageView = DownloadImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -127,7 +127,7 @@ final class MovieDetailsViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -189,7 +189,7 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func updateView() {
-        imgView.loadImage(from: viewModel.imageURL)
+        imgView.loadImage(from: URL(string: viewModel.imageURL))
         overviewLabel.text = viewModel.overview
         ratingLabel.text = viewModel.ratingStars
         scoreLabel.text = viewModel.score

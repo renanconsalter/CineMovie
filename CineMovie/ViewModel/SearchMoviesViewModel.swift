@@ -44,7 +44,8 @@ final class SearchMoviesViewModel {
             self.movies = []
             self.delegate?.showEmptyState()
         default:
-            service.searchMovie(query: query) { result in
+            service.searchMovie(query: query) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(let movies):
                     let noResults = movies.results.isEmpty

@@ -68,7 +68,8 @@ final class MovieDetailsViewModel {
     }
     
     func getMovie() {
-        service.getMovie(id: movie.id) { result in
+        service.getMovie(id: movie.id) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let movie):
                 self.movie = movie
