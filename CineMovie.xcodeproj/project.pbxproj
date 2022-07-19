@@ -45,6 +45,7 @@
 		4FF1797A2886634F00CA3F3F /* ListTopRatedMoviesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF179792886634F00CA3F3F /* ListTopRatedMoviesCoordinator.swift */; };
 		4FF1797C2886637600CA3F3F /* ListPopularMoviesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1797B2886637600CA3F3F /* ListPopularMoviesCoordinator.swift */; };
 		4FF1797E2886638D00CA3F3F /* SearchMoviesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1797D2886638D00CA3F3F /* SearchMoviesCoordinator.swift */; };
+		4FF17980288663B400CA3F3F /* MoviesDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF1797F288663B400CA3F3F /* MoviesDetailsCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		4FF179792886634F00CA3F3F /* ListTopRatedMoviesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTopRatedMoviesCoordinator.swift; sourceTree = "<group>"; };
 		4FF1797B2886637600CA3F3F /* ListPopularMoviesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPopularMoviesCoordinator.swift; sourceTree = "<group>"; };
 		4FF1797D2886638D00CA3F3F /* SearchMoviesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMoviesCoordinator.swift; sourceTree = "<group>"; };
+		4FF1797F288663B400CA3F3F /* MoviesDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailsCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -354,6 +356,7 @@
 				4FF179792886634F00CA3F3F /* ListTopRatedMoviesCoordinator.swift */,
 				4FF1797B2886637600CA3F3F /* ListPopularMoviesCoordinator.swift */,
 				4FF1797D2886638D00CA3F3F /* SearchMoviesCoordinator.swift */,
+				4FF1797F288663B400CA3F3F /* MoviesDetailsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				4F6FD7A2287C750900E6D9C8 /* UIViewController+Extension.swift in Sources */,
 				4F6FD7B0287C778900E6D9C8 /* ListPopularMoviesViewModel.swift in Sources */,
 				4F6FD778287C6F6900E6D9C8 /* ErrorHandler.swift in Sources */,
+				4FF17980288663B400CA3F3F /* MoviesDetailsCoordinator.swift in Sources */,
 				4F916A75287D09BC003F699F /* DownloadImageView.swift in Sources */,
 				4F6FD7B5287C78A000E6D9C8 /* SearchMoviesViewController.swift in Sources */,
 				4F6FD7A5287C763200E6D9C8 /* MovieDetailsViewController.swift in Sources */,
