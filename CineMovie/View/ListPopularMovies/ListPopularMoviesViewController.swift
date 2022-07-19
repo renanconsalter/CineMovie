@@ -10,7 +10,11 @@ import UIKit
 final class ListPopularMoviesViewController: UIViewController {
     
     // MARK: - ViewModel & CollectionView
-    private let viewModel: ListPopularMoviesViewModel!
+    var viewModel: ListPopularMoviesViewModel! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero,
@@ -22,16 +26,6 @@ final class ListPopularMoviesViewController: UIViewController {
         return collectionView
     }()
     
-    // MARK: - Init Methods
-    init(viewModel: ListPopularMoviesViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Lifecycle/Configuration/Setup Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +34,7 @@ final class ListPopularMoviesViewController: UIViewController {
         configureDelegates()
         loadData()
     }
-
+    
     private func configureViews() {
         view.addSubview(collectionView)
     }
@@ -57,7 +51,6 @@ final class ListPopularMoviesViewController: UIViewController {
     private func configureDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        viewModel.delegate = self
     }
     
     private func loadData() {
@@ -133,13 +126,6 @@ extension ListPopularMoviesViewController: UIScrollViewDelegate {
 
 // MARK: - ListPopularMoviesViewModelDelegate Methods
 extension ListPopularMoviesViewController: ListPopularMoviesViewModelDelegate {
-    func didSelectMovie(movie: Movie) {
-        let detailsVC = MovieDetailsViewController(
-            viewModel: MovieDetailsViewModel(movie: movie)
-        )
-        present(detailsVC, animated: true)
-    }
-    
     func didFindPopularMovies() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
