@@ -16,7 +16,7 @@ All the information and data used in this project came from the [TMDB API](https
 - [x] Error handling
 - [x] Image caching
 - [x] 100% programmatic UI
-- [x] Model-View-ViewModel pattern
+- [x] Model-View-ViewModel-Coordinator pattern (MVVM-C)
 
 ## Screenshots
 
@@ -42,7 +42,6 @@ All the information and data used in this project came from the [TMDB API](https
 
 ## Coming Soon
 
-- [ ] Coordinator pattern
 - [ ] Localization Strings to support more regions and languages 
 - [ ] Add more Unit and UI tests
 - [ ] Create Upcoming and Now Playing section
