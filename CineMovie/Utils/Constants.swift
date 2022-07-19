@@ -15,8 +15,10 @@ struct Constants {
         static let starYellow = "AccentColor"
     }
     struct Icons {
-        static let star = "star.fill"
+        static let star = "star"
+        static let starFill = "star.fill"
         static let film = "film"
+        static let filmFill = "film.fill"
         static let search = "magnifyingglass"
         static let close = "xmark"
         static let appLogo = "Logo"

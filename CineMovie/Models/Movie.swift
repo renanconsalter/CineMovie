@@ -35,17 +35,17 @@ struct Movie: Decodable {
 }
 
 extension Movie {
-    var backdropURL: String {
+    var backdropURL: URL? {
         guard let backdropPath = self.backdropPath else {
-            return "https://image.xumo.com/v1/assets/asset/XM05YG2LULFZON/600x340.jpg"
+            return URL(string: "https://image.xumo.com/v1/assets/asset/XM05YG2LULFZON/600x340.jpg")
         }
-        return "\(Constants.ApiImageURL.highQuality)\(backdropPath)"
+        return URL(string: "\(Constants.ApiImageURL.highQuality)\(backdropPath)")
     }
     
-    var posterURL: String {
+    var posterURL: URL? {
         guard let posterPath = self.posterPath else {
-            return "https://critics.io/img/movies/poster-placeholder.png"
+            return URL(string: "https://critics.io/img/movies/poster-placeholder.png")
         }
-        return "\(Constants.ApiImageURL.mediumQuality)\(posterPath)"
+        return URL(string: "\(Constants.ApiImageURL.mediumQuality)\(posterPath)")
     }
 }

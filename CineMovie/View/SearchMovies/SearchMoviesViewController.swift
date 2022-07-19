@@ -10,7 +10,12 @@ import UIKit
 final class SearchMoviesViewController: UIViewController {
     
     // MARK: - ViewModel, Views & SearchController
-    private let viewModel: SearchMoviesViewModel!
+    var viewModel: SearchMoviesViewModel! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
+    
     private let searchController = UISearchController(searchResultsController: nil)
     
     private let tableView: UITableView = {
@@ -41,16 +46,6 @@ final class SearchMoviesViewController: UIViewController {
         label.text = Constants.Search.emptyStateWelcomeText
         return label
     }()
-    
-    // MARK: - Init Methods
-    init(viewModel: SearchMoviesViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Lifecycle/Configuration/Setup Methods
     override func viewDidLoad() {
@@ -94,7 +89,6 @@ final class SearchMoviesViewController: UIViewController {
     private func configureDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
-        viewModel.delegate = self
     }
     
     private func configureSearchController() {
@@ -162,13 +156,6 @@ extension SearchMoviesViewController: UISearchResultsUpdating {
 
 // MARK: - SearchMoviesViewModelDelegate Methods
 extension SearchMoviesViewController: SearchMoviesViewModelDelegate {
-    func didSelectMovie(movie: Movie) {
-        let detailsVC = MovieDetailsViewController(
-            viewModel: MovieDetailsViewModel(movie: movie)
-        )
-        present(detailsVC, animated: true)
-    }
-    
     func showNoResultsState() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()

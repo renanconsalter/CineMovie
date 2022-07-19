@@ -10,7 +10,11 @@ import UIKit
 final class MovieDetailsViewController: UIViewController {
     
     // MARK: - ViewModel & Views
-    private let viewModel: MovieDetailsViewModel!
+    var viewModel: MovieDetailsViewModel! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -18,8 +22,8 @@ final class MovieDetailsViewController: UIViewController {
         return scrollView
     }()
     
-    private let imgView: DownloadImageView = {
-        let imageView = DownloadImageView()
+    private let imgView: CachedImageView = {
+        let imageView = CachedImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -71,24 +75,18 @@ final class MovieDetailsViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Init Methods
-    init(viewModel: MovieDetailsViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - Lifecycle/Configuration/Setup Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
         configureButton()
         configureConstraints()
-        configureDelegates()
         loadData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.didFinishShowDetails()
     }
     
     private func configureViews() {
@@ -160,10 +158,6 @@ final class MovieDetailsViewController: UIViewController {
         ])
     }
     
-    private func configureDelegates() {
-        viewModel.delegate = self
-    }
-    
     @objc private func didTapClose() {
         dismiss(animated: true, completion: nil)
     }
@@ -175,7 +169,7 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func updateView() {
-        imgView.loadImage(from: URL(string: viewModel.imageURL))
+        imgView.loadImage(from: viewModel.imageURL)
         overviewLabel.text = viewModel.overview
         ratingLabel.text = viewModel.ratingStars
         scoreLabel.text = viewModel.score

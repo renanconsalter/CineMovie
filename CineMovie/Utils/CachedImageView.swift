@@ -1,18 +1,21 @@
+//
+//  CachedImageView.swift
+//  CineMovie
+//
+//  Created by Renan Consalter on 19/07/22.
+//
+
 import UIKit
 
 private let imageCache = NSCache<NSString, UIImage>()
 
-class DownloadImageView: UIImageView {
+class CachedImageView: UIImageView {
     private var imageUrl: URL?
-
-    private func getData(from url: URL,
-                         completionHandler: @escaping(Data?,
-                                                      URLResponse?,
-                                                      Error?) -> Void) {
-        URLSession
-            .shared
-            .dataTask(with: url,
-                      completionHandler: completionHandler)
+    private func getData(
+        from url: URL,
+        completionHandler: @escaping(Data?, URLResponse?, Error?) -> Void) {
+            URLSession.shared.dataTask(with: url,
+                                       completionHandler: completionHandler)
             .resume()
     }
 
