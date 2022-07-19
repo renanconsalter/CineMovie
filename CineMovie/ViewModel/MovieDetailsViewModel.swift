@@ -18,6 +18,7 @@ final class MovieDetailsViewModel {
     private var service = MoviesService.shared
     
     weak var delegate: MovieDetailsViewModelDelegate?
+    weak var coordinator: MovieDetailsCoordinator?
     
     init(movie: Movie) {
         self.movie = movie
@@ -27,7 +28,7 @@ final class MovieDetailsViewModel {
         return movie.id
     }
     
-    var imageURL: String {
+    var imageURL: URL? {
         return movie.backdropURL
     }
     
@@ -78,6 +79,10 @@ final class MovieDetailsViewModel {
                 self.delegate?.didFail(error: error)
             }
         }
+    }
+    
+    func didFinishShowDetails() {
+        coordinator?.dismissMovieDetails()
     }
 }
 

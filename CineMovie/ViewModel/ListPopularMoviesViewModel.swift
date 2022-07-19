@@ -9,20 +9,19 @@ import Foundation
 
 protocol ListPopularMoviesViewModelDelegate: AnyObject {
     func didFindPopularMovies()
-    func didSelectMovie(movie: Movie)
     func didFail(error: ErrorHandler)
 }
 
 final class ListPopularMoviesViewModel {
     
     private var service = MoviesService.shared
-    
     private var movies: [Movie] = []
-    private var currentPage: Int = 1
     
+    private var currentPage: Int = 1
     private var isLoading: Bool = false
     
     weak var delegate: ListPopularMoviesViewModelDelegate?
+    weak var coordinator: ListPopularMoviesCoordinator?
     
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
@@ -33,12 +32,11 @@ final class ListPopularMoviesViewModel {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
-        let movie = movies[indexPath.row]
-        self.delegate?.didSelectMovie(movie: movie)
+        let movie = getMovie(at: indexPath)
+        coordinator?.goToMovieDetails(with: movie)
     }
     
     func loadPopularMovies() {
-        
         guard !isLoading else { return }
         
         isLoading = true

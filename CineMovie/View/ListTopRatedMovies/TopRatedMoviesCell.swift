@@ -10,8 +10,8 @@ import UIKit
 final class TopRatedMoviesCell: UITableViewCell {
     
     // MARK: - Views
-    private let movieImage: DownloadImageView = {
-        let imageView = DownloadImageView()
+    private let movieImage: CachedImageView = {
+        let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -36,7 +36,7 @@ final class TopRatedMoviesCell: UITableViewCell {
     private let starImgView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: Constants.Icons.star)
+        imageView.image = UIImage(systemName: Constants.Icons.starFill)
         imageView.tintColor = UIColor(named: Constants.Colors.starYellow)
         return imageView
     }()
@@ -104,7 +104,7 @@ final class TopRatedMoviesCell: UITableViewCell {
     }
     
     func configure(viewModel: TopRatedMoviesCellViewModel) {
-        movieImage.loadImage(from: URL(string: viewModel.imageURL))
+        movieImage.loadImage(from: viewModel.imageURL)
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         ratingLabel.text = viewModel.rating

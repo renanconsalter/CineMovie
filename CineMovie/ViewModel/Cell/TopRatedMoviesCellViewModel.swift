@@ -15,7 +15,7 @@ final class TopRatedMoviesCellViewModel {
         self.movie = movie
     }
     
-    var imageURL: String {
+    var imageURL: URL? {
         return movie.posterURL
     }
     

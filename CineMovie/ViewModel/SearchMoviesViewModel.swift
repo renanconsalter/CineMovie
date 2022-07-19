@@ -10,7 +10,6 @@ import Foundation
 protocol SearchMoviesViewModelDelegate: AnyObject {
     func didFindMovies()
     func didFail(error: ErrorHandler)
-    func didSelectMovie(movie: Movie)
     func showEmptyState()
     func showNoResultsState()
 }
@@ -18,10 +17,10 @@ protocol SearchMoviesViewModelDelegate: AnyObject {
 final class SearchMoviesViewModel {
 
     private var service = MoviesService.shared
-    
     private var movies: [Movie] = []
     
     weak var delegate: SearchMoviesViewModelDelegate?
+    weak var coordinator: SearchMoviesCoordinator?
     
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
@@ -32,8 +31,8 @@ final class SearchMoviesViewModel {
     }
     
     func didSelectRow(at indexPath: IndexPath) {
-        let movie = movies[indexPath.row]
-        self.delegate?.didSelectMovie(movie: movie)
+        let movie = getMovie(at: indexPath)
+        coordinator?.goToMovieDetails(with: movie)
     }
     
     func searchMovies(with query: String) {

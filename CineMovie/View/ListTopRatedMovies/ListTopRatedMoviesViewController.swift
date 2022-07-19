@@ -10,25 +10,20 @@ import UIKit
 final class ListTopRatedMoviesViewController: UIViewController {
     
     // MARK: - ViewModel & TableView
-    private let viewModel: ListTopRatedMoviesViewModel
+    var viewModel: ListTopRatedMoviesViewModel! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(TopRatedMoviesCell.self, forCellReuseIdentifier: String(describing: TopRatedMoviesCell.self))
+        tableView.register(TopRatedMoviesCell.self,
+                           forCellReuseIdentifier: String(describing: TopRatedMoviesCell.self))
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
-    // MARK: - Init Methods
-    init(viewModel: ListTopRatedMoviesViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Lifecycle/Configuration/Setup Methods
     override func viewDidLoad() {
@@ -38,7 +33,7 @@ final class ListTopRatedMoviesViewController: UIViewController {
         configureDelegates()
         loadData()
     }
-
+    
     private func configureViews() {
         view.addSubview(tableView)
     }
@@ -55,7 +50,6 @@ final class ListTopRatedMoviesViewController: UIViewController {
     private func configureDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
-        viewModel.delegate = self
     }
     
     // MARK: - Data Manipulation
@@ -128,13 +122,6 @@ extension ListTopRatedMoviesViewController: UIScrollViewDelegate {
 
 // MARK: - ListTopRatedMoviesViewModelDelegate Methods
 extension ListTopRatedMoviesViewController: ListTopRatedMoviesViewModelDelegate {
-    func didSelectMovie(movie: Movie) {
-        let detailsVC = MovieDetailsViewController(
-            viewModel: MovieDetailsViewModel(movie: movie)
-        )
-        present(detailsVC, animated: true)
-    }
-    
     func didFindTopRatedMovies() {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
