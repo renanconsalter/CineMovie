@@ -362,7 +362,7 @@
 				4F71F317288A0D4A007AB318 /* ListTopRatedMoviesViewModelTests.swift */,
 				4F71F31C288A1790007AB318 /* ListTopRatedMoviesViewModelDelegateSpy.swift */,
 			);
-			name = ListTopRatedMovies;
+			path = ListTopRatedMovies;
 			sourceTree = "<group>";
 		};
 		4F71F319288A1329007AB318 /* Services */ = {
@@ -370,7 +370,7 @@
 			children = (
 				4F71F31A288A1347007AB318 /* MoviesServiceSpy.swift */,
 			);
-			name = Services;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		4F71F31F288A1963007AB318 /* Fixtures */ = {
@@ -379,7 +379,7 @@
 				4F71F320288A1978007AB318 /* MoviesResponse+Fixture.swift */,
 				4F71F325288A457F007AB318 /* Movie+Fixture.swift */,
 			);
-			name = Fixtures;
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		4F71F322288A438D007AB318 /* Cell */ = {
@@ -387,7 +387,7 @@
 			children = (
 				4F71F323288A43BD007AB318 /* TopRatedMoviesCellViewModelTests.swift */,
 			);
-			name = Cell;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		4F71F327288A5971007AB318 /* ListPopularMovies */ = {
@@ -395,7 +395,7 @@
 			children = (
 				4F71F328288A597E007AB318 /* Cell */,
 			);
-			name = ListPopularMovies;
+			path = ListPopularMovies;
 			sourceTree = "<group>";
 		};
 		4F71F328288A597E007AB318 /* Cell */ = {
@@ -403,7 +403,7 @@
 			children = (
 				4F71F329288A59AC007AB318 /* PopularMoviesCellViewModelTests.swift */,
 			);
-			name = Cell;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		4F71F32B288B0186007AB318 /* MovieDetails */ = {
@@ -411,7 +411,7 @@
 			children = (
 				4F71F32C288B01A8007AB318 /* MovieDetailsViewModelTests.swift */,
 			);
-			name = MovieDetails;
+			path = MovieDetails;
 			sourceTree = "<group>";
 		};
 		4FF179712886620200CA3F3F /* Protocols */ = {

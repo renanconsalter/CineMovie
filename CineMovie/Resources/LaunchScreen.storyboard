@@ -31,9 +31,9 @@
                         <constraints>
                             <constraint firstItem="Ucy-Cp-93p" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="C6O-WC-9bS"/>
                             <constraint firstAttribute="bottom" secondItem="VHc-XX-ySz" secondAttribute="bottom" id="DXx-1a-r18"/>
-                            <constraint firstItem="VHc-XX-ySz" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="FWu-Hl-kVt"/>
+                            <constraint firstItem="VHc-XX-ySz" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="FWu-Hl-kVt"/>
                             <constraint firstItem="Ucy-Cp-93p" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Go1-N0-pCN"/>
-                            <constraint firstItem="VHc-XX-ySz" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="Iel-h1-I2W"/>
+                            <constraint firstItem="VHc-XX-ySz" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Iel-h1-I2W"/>
                             <constraint firstItem="VHc-XX-ySz" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="hd7-ew-WXh"/>
                         </constraints>
                     </view>
