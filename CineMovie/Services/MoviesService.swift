@@ -20,7 +20,11 @@ final class MoviesService: MoviesServiceProtocol {
     
     static let shared = MoviesService()
     
-    private let httpClient = HttpClient.shared
+    private let httpClient: HttpClientProtocol
+    
+    init(httpClient: HttpClientProtocol = HttpClient.shared) {
+        self.httpClient = httpClient
+    }
     
     func getTopRatedMovies(page: Int, completion: @escaping (ResultMovies) -> Void) {
         httpClient.request(endpoint: MoviesEndpoint.getTopRatedMovies(page: page),

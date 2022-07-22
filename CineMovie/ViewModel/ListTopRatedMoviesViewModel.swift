@@ -14,12 +14,16 @@ protocol ListTopRatedMoviesViewModelDelegate: AnyObject {
 
 final class ListTopRatedMoviesViewModel {
     
-    private var service = MoviesService.shared
+    private let service: MoviesServiceProtocol
+    
+    init(service: MoviesServiceProtocol = MoviesService.shared) {
+        self.service = service
+    }
+    
     private var movies: [Movie] = []
-
     private var currentPage: Int = 1
     private var isLoading: Bool = false
-    
+
     weak var delegate: ListTopRatedMoviesViewModelDelegate?
     weak var coordinator: ListTopRatedMoviesCoordinator?
     
@@ -37,7 +41,6 @@ final class ListTopRatedMoviesViewModel {
     }
     
     func loadTopRatedMovies() {
-        
         guard !isLoading else { return }
         
         isLoading = true
