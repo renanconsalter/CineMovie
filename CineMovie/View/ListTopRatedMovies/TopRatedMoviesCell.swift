@@ -104,7 +104,7 @@ final class TopRatedMoviesCell: UITableViewCell {
     }
     
     func configure(viewModel: TopRatedMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.imageURL)
+        movieImage.loadImage(from: viewModel.posterImageURL)
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         ratingLabel.text = viewModel.rating
