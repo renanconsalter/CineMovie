@@ -29,7 +29,7 @@ final class PopularMoviesCell: UICollectionViewCell {
     
     // MARK: - Configuration/Setup Methods
     override func layoutSubviews() {
-        movieImage.frame = contentView.frame
+        configureConstraints()
         super.layoutSubviews()
     }
     
@@ -37,8 +37,17 @@ final class PopularMoviesCell: UICollectionViewCell {
         movieImage.image = nil
         super.prepareForReuse()
     }
+    
+    private func configureConstraints() {
+        NSLayoutConstraint.activate([
+            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            movieImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            movieImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
 
     func configure(viewModel: PopularMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.imageURL)
+        movieImage.loadImage(from: viewModel.posterImageURL)
     }
 }

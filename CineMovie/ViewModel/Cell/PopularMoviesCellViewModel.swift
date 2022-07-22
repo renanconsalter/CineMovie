@@ -15,7 +15,10 @@ final class PopularMoviesCellViewModel {
         self.movie = movie
     }
     
-    var imageURL: URL? {
-        return movie.posterURL
+    var posterImageURL: String {
+        guard let posterPath = movie.posterPath else {
+            return Constants.ApiImageURL.posterPlaceholder
+        }
+        return Constants.ApiImageURL.mediumQuality + posterPath
     }
 }
