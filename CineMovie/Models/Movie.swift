@@ -16,9 +16,8 @@ struct Movie: Decodable {
     let releaseDate: String?
     let runtime: Int?
     let voteAverage: Double
-    
-    private let backdropPath: String?
-    private let posterPath: String?
+    let backdropPath: String?
+    let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,21 +30,5 @@ struct Movie: Decodable {
         case voteAverage = "vote_average"
         case backdropPath = "backdrop_path"
         case posterPath = "poster_path"
-    }
-}
-
-extension Movie {
-    var backdropURL: URL? {
-        guard let backdropPath = self.backdropPath else {
-            return URL(string: "https://image.xumo.com/v1/assets/asset/XM05YG2LULFZON/600x340.jpg")
-        }
-        return URL(string: "\(Constants.ApiImageURL.highQuality)\(backdropPath)")
-    }
-    
-    var posterURL: URL? {
-        guard let posterPath = self.posterPath else {
-            return URL(string: "https://critics.io/img/movies/poster-placeholder.png")
-        }
-        return URL(string: "\(Constants.ApiImageURL.mediumQuality)\(posterPath)")
     }
 }
