@@ -19,8 +19,8 @@ class CachedImageView: UIImageView {
             .resume()
     }
 
-    func loadImage(from url: URL?, placeHolder: UIImage? = nil) {
-        guard let url = url else {
+    func loadImage(from stringURL: String, placeHolder: UIImage? = nil) {
+        guard let url = URL(string: stringURL) else {
             return
         }
 

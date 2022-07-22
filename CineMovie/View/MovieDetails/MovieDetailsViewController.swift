@@ -169,7 +169,7 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func updateView() {
-        imgView.loadImage(from: viewModel.imageURL)
+        imgView.loadImage(from: viewModel.backdropImageURL)
         overviewLabel.text = viewModel.overview
         ratingLabel.text = viewModel.ratingStars
         scoreLabel.text = viewModel.score

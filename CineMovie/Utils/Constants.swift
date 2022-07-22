@@ -46,5 +46,7 @@ struct Constants {
         static let highQuality = "https://image.tmdb.org/t/p/w780"
         static let mediumQuality = "https://image.tmdb.org/t/p/w342"
         static let lowQuality = "https://image.tmdb.org/t/p/w154"
+        static let posterPlaceholder = "https://critics.io/img/movies/poster-placeholder.png"
+        static let backdropPlaceholder = "https://image.xumo.com/v1/assets/asset/XM05YG2LULFZON/600x340.jpg"
     }
 }
