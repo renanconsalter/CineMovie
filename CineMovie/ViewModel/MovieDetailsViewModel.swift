@@ -18,7 +18,7 @@ final class MovieDetailsViewModel {
     private var service: MoviesServiceProtocol
     
     weak var delegate: MovieDetailsViewModelDelegate?
-    weak var coordinator: MovieDetailsCoordinator?
+    weak var coordinator: MovieDetailsCoordinatorDelegate?
     
     init(
         service: MoviesServiceProtocol = MoviesService.shared,
@@ -84,13 +84,12 @@ final class MovieDetailsViewModel {
     
     func getMovie() {
         service.getMovie(id: movie.id) { [weak self] result in
-            guard let self = self else { return }
             switch result {
             case .success(let movie):
-                self.movie = movie
-                self.delegate?.didLoadMovieDetails()
+                self?.movie = movie
+                self?.delegate?.didLoadMovieDetails()
             case .failure(let error):
-                self.delegate?.didFail(error: error)
+                self?.delegate?.didFail(error: error)
             }
         }
     }

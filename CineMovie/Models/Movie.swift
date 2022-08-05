@@ -32,3 +32,9 @@ struct Movie: Decodable {
         case posterPath = "poster_path"
     }
 }
+
+extension Movie: Equatable {
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+        return true
+    }
+}

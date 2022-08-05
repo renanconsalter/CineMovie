@@ -16,11 +16,16 @@ protocol SearchMoviesViewModelDelegate: AnyObject {
 
 final class SearchMoviesViewModel {
 
-    private var service = MoviesService.shared
-    private var movies: [Movie] = []
+    private let service: MoviesServiceProtocol
+    
+    init(service: MoviesServiceProtocol = MoviesService.shared) {
+        self.service = service
+    }
+    
+    var movies: [Movie] = []
     
     weak var delegate: SearchMoviesViewModelDelegate?
-    weak var coordinator: SearchMoviesCoordinator?
+    weak var coordinator: MovieDetailsCoordinatorProtocol?
     
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
@@ -44,19 +49,18 @@ final class SearchMoviesViewModel {
             self.delegate?.showEmptyState()
         default:
             service.searchMovie(query: query) { [weak self] result in
-                guard let self = self else { return }
                 switch result {
                 case .success(let movies):
                     let noResults = movies.results.isEmpty
-                    self.movies = movies.results
+                    self?.movies = movies.results
                     
                     if noResults {
-                        self.delegate?.showNoResultsState()
+                        self?.delegate?.showNoResultsState()
                     } else {
-                        self.delegate?.didFindMovies()
+                        self?.delegate?.didFindMovies()
                     }
                 case .failure(let error):
-                    self.delegate?.didFail(error: error)
+                    self?.delegate?.didFail(error: error)
                 }
             }
         }

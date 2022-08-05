@@ -37,7 +37,7 @@ final class SearchMoviesCoordinator: Coordinator {
     }
 }
 
-extension SearchMoviesCoordinator {
+extension SearchMoviesCoordinator: MovieDetailsCoordinatorProtocol {
     func goToMovieDetails(with movie: Movie) {
         let movieDetailsCoordinator = MovieDetailsCoordinator(
             navigationController: navigationController,
