@@ -10,6 +10,28 @@ import XCTest
 @testable import CineMovie
 
 final class MovieDetailsViewModelTests: XCTestCase {
+    private let serviceSpy = MoviesServiceSpy()
+    private let delegateSpy = MovieDetailsViewModelDelegateSpy()
+    private let coordinatorSpy = MovieDetailsCoordinatorSpy()
+    private let movieMock = Movie.fixture(
+        id: 278,
+        title: "The Shawshank Redemption",
+        genres: [
+            MovieGenre(id: 18, name: "Drama"),
+            MovieGenre(id: 80, name: "Crime")
+        ],
+        overview: "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+        releaseDate: "1994-09-23",
+        runtime: 142,
+        voteAverage: 8.723,
+        backdropPath: "/iNh3BivHyg5sQRPP1KOkzguEX0H.jpg",
+        posterPath: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+    )
+    private lazy var sut = MovieDetailsViewModel(
+        service: serviceSpy,
+        movie: movieMock
+    )
+    
     // MARK: - id
     func test_movieDetails_isValid_and_notNil() {
         // Given
@@ -100,12 +122,15 @@ final class MovieDetailsViewModelTests: XCTestCase {
     }
     
     func test_movieDetails_primaryGenre_isNil_or_doesntExist() {
+        // Given
         let viewModelToTest = createSUT(
             with: Movie.fixture(genres: nil)
         )
         
+        // When
         let viewModelPrimaryGenre = viewModelToTest.primaryGenre
         
+        // Then
         XCTAssertEqual(Constants.notAvailable, viewModelPrimaryGenre)
     }
     
@@ -200,7 +225,6 @@ final class MovieDetailsViewModelTests: XCTestCase {
         // When
         let viewModelRatingStars = viewModelToTest.ratingStars
         
-        
         // Then
         XCTAssertNotNil(ratingToTest)
         XCTAssertNotNil(ratingStarsToTest)
@@ -241,6 +265,52 @@ final class MovieDetailsViewModelTests: XCTestCase {
         
         // Then
         XCTAssertEqual(Constants.notAvailable, viewModelScore)
+    }
+    
+    func test_getMovie_shouldCallServiceGetMovie() {
+        sut.getMovie()
+        
+        XCTAssertTrue(serviceSpy.getMovieCalled)
+    }
+    
+    func test_getMovie_shouldCallServiceGetMovieOnce() {
+        sut.getMovie()
+        
+        XCTAssertEqual(serviceSpy.getMovieCount, 1)
+    }
+    
+    func test_getMovie_sholdCallServiceGetMovie_withMovieId() {
+        sut.getMovie()
+        
+        XCTAssertEqual(serviceSpy.getMovieIdPassed, movieMock.id)
+    }
+    
+    func test_getMovie_shouldTrigger_didLoadMovieDetails_delegate() {
+        serviceSpy.getMovieToBeReturned = movieMock
+        sut.delegate = delegateSpy
+        
+        sut.getMovie()
+        
+        XCTAssertNotNil(delegateSpy)
+        XCTAssertTrue(delegateSpy.didLoadMovieDetailsCalled)
+    }
+    
+    func test_getMovie_shouldTrigger_didFail_delegate() {
+        serviceSpy.getMovieToBeReturned = nil
+        sut.delegate = delegateSpy
+        
+        sut.getMovie()
+        
+        XCTAssertNotNil(delegateSpy)
+        XCTAssertTrue(delegateSpy.didFailCalled)
+    }
+    
+    func test_didFinishShowDetails_dismissMovieDetails_usingCoordinator() {
+        sut.coordinator = coordinatorSpy
+        
+        sut.didFinishShowDetails()
+        
+        XCTAssertTrue(coordinatorSpy.dismissMovieDetailsCalled)
     }
 }
 
