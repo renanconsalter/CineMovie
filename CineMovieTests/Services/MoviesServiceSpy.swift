@@ -15,26 +15,76 @@ final class MoviesServiceSpy: MoviesServiceProtocol {
     var getTopRatedMoviesToBeReturned: ResultMovies?
     private(set) var getTopRatedMoviesCalled: Bool = false
     private(set) var getTopRatedMoviesCallCount: Int = 0
-    private(set) var pagePassed: Int?
+    private(set) var getTopRatedMoviesPagePassed: Int?
     
     func getTopRatedMovies(page: Int, completion: @escaping (ResultMovies) -> Void) {
-        pagePassed = page
+        
+        getTopRatedMoviesPagePassed = page
         getTopRatedMoviesCalled = true
         getTopRatedMoviesCallCount += 1
         
         guard let getTopRatedMoviesToBeReturned = getTopRatedMoviesToBeReturned else {
-            return completion(.failure(ErrorHandler.decode))
+            return completion(.failure(ErrorHandler.noResponse))
         }
         
         return completion(getTopRatedMoviesToBeReturned)
     }
     
     // MARK: - getPopularMovies
-    func getPopularMovies(page: Int, completion: @escaping (ResultMovies) -> Void) { }
+    var getPopularMoviesToBeReturned: ResultMovies?
+    private(set) var getPopularMoviesCalled: Bool = false
+    private(set) var getPopularMoviesCallCount: Int = 0
+    private(set) var getPopularMoviesPagePassed: Int?
+    
+    func getPopularMovies(page: Int, completion: @escaping (ResultMovies) -> Void) {
+        
+        getPopularMoviesPagePassed = page
+        getPopularMoviesCalled = true
+        getPopularMoviesCallCount += 1
+        
+        guard let getPopularMoviesToBeReturned = getPopularMoviesToBeReturned else {
+            return completion(.failure(ErrorHandler.noResponse))
+        }
+        
+        return completion(getPopularMoviesToBeReturned)
+    }
     
     // MARK: - searchMovie
-    func searchMovie(query: String, completion: @escaping (ResultMovies) -> Void) { }
+    var searchMovieToBeReturned: ResultMovies?
+    private(set) var searchMovieCalled: Bool = false
+    private(set) var searchMovieCallCount: Int = 0
+    private(set) var searchMovieQueryPassed: String?
+    
+    func searchMovie(query: String, completion: @escaping (ResultMovies) -> Void) {
+        
+        searchMovieCalled = true
+        searchMovieCallCount = query.count
+        searchMovieQueryPassed = query
+        
+        guard let searchMovieToBeReturned = searchMovieToBeReturned else {
+            return completion(.failure(ErrorHandler.noResponse))
+        }
+        
+        return completion(searchMovieToBeReturned)
+        
+    }
     
     // MARK: - getMovie
-    func getMovie(id: Int, completion: @escaping (Result<Movie, ErrorHandler>) -> Void) { }
+    var getMovieToBeReturned: Movie?
+    private(set) var getMovieCalled: Bool = false
+    private(set) var getMovieCount: Int = 0
+    private(set) var getMovieIdPassed: Int?
+    
+    func getMovie(id: Int, completion: @escaping (Result<Movie, ErrorHandler>) -> Void) {
+        
+        getMovieCalled = true
+        getMovieCount += 1
+        getMovieIdPassed = id
+        
+        guard let getMovieToBeReturned = getMovieToBeReturned else {
+            return completion(.failure(ErrorHandler.noResponse))
+        }
+        
+        return completion(.success(getMovieToBeReturned))
+    }
 }

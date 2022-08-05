@@ -12,6 +12,7 @@ import XCTest
 final class ListTopRatedMoviesViewModelTests: XCTestCase {
     private let serviceSpy = MoviesServiceSpy()
     private let delegateSpy = ListTopRatedMoviesViewModelDelegateSpy()
+    private let coordinatorSpy = ListTopRatedMoviesCoordinatorSpy()
     private lazy var sut = ListTopRatedMoviesViewModel(
         service: serviceSpy
     )
@@ -39,12 +40,53 @@ final class ListTopRatedMoviesViewModelTests: XCTestCase {
     }
     
     func test_loadTopRatedMovies_shouldTrigger_didFail_delegate() {
-        serviceSpy.getTopRatedMoviesToBeReturned = .failure(ErrorHandler.invalidData)
+        let fakeError = ErrorHandler.unknown
+        serviceSpy.getTopRatedMoviesToBeReturned = .failure(fakeError)
         sut.delegate = delegateSpy
         
         sut.loadTopRatedMovies()
         
         XCTAssertNotNil(delegateSpy)
         XCTAssertTrue(delegateSpy.didFailCalled)
+    }
+    
+    func test_getMovieAtIndexPath_shouldReturnMovie() {
+        sut.movies = [
+            Movie.fixture(title: "The Godfather"),
+            Movie.fixture(title: "The Shawshank Redemption"),
+            Movie.fixture(title: "Thor"),
+            Movie.fixture(title: "The Black Phone")
+        ]
+        
+        let movie = sut.getMovie(at: IndexPath.init(row: 2, section: 1))
+        
+        XCTAssertEqual(movie, Movie.fixture(title: "Thor"))
+    }
+    
+    func test_numberofRow_shouldReturnDataSourceCount() {
+        sut.movies = [
+            Movie.fixture(),
+            Movie.fixture(),
+            Movie.fixture(),
+        ]
+        
+        let numberOfRows = sut.numberOfRows()
+
+        XCTAssertEqual(numberOfRows, 3)
+    }
+    
+    func test_didSelectRowAtIndexPath_shouldNavigateToDetails_usingCoordinator() {
+        sut.coordinator = coordinatorSpy
+        sut.movies = [
+            Movie.fixture(title: "The Godfather"),
+            Movie.fixture(title: "The Shawshank Redemption"),
+            Movie.fixture(title: "Thor"),
+            Movie.fixture(title: "The Black Phone")
+        ]
+        
+        sut.didSelectRow(at: IndexPath.init(row: 2, section: 1))
+        
+        XCTAssertTrue(coordinatorSpy.goToMovieDetailsCalled)
+        XCTAssertEqual(coordinatorSpy.goToMovieDetailsPassed?.title, "Thor")
     }
 }

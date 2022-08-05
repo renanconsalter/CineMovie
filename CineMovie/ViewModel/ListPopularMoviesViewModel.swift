@@ -14,14 +14,19 @@ protocol ListPopularMoviesViewModelDelegate: AnyObject {
 
 final class ListPopularMoviesViewModel {
     
-    private var service = MoviesService.shared
-    private var movies: [Movie] = []
+    private let service: MoviesServiceProtocol
+
+    init(service: MoviesServiceProtocol = MoviesService.shared) {
+        self.service = service
+    }
+
+    var movies: [Movie] = []
+    
+    weak var delegate: ListPopularMoviesViewModelDelegate?
+    weak var coordinator: MovieDetailsCoordinatorProtocol?
     
     private var currentPage: Int = 1
     private var isLoading: Bool = false
-    
-    weak var delegate: ListPopularMoviesViewModelDelegate?
-    weak var coordinator: ListPopularMoviesCoordinator?
     
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
@@ -38,19 +43,17 @@ final class ListPopularMoviesViewModel {
     
     func loadPopularMovies() {
         guard !isLoading else { return }
-        
         isLoading = true
         
         service.getPopularMovies(page: currentPage) { [weak self] result in
-            guard let self = self else { return }
-            self.isLoading = false
+            self?.isLoading = false
             switch result {
             case .success(let popularMovies):
-                self.movies.append(contentsOf: popularMovies.results)
-                self.currentPage = popularMovies.page + 1
-                self.delegate?.didFindPopularMovies()
+                self?.movies.append(contentsOf: popularMovies.results)
+                self?.currentPage = popularMovies.page + 1
+                self?.delegate?.didFindPopularMovies()
             case .failure(let error):
-                self.delegate?.didFail(error: error)
+                self?.delegate?.didFail(error: error)
             }
         }
     }
