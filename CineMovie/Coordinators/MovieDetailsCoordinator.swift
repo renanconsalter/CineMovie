@@ -1,5 +1,5 @@
 //
-//  MoviesDetailsCoordinator.swift
+//  MovieDetailsCoordinator.swift
 //  CineMovie
 //
 //  Created by Renan Consalter on 18/07/22.
@@ -7,7 +7,16 @@
 
 import UIKit
 
+protocol MovieDetailsCoordinatorProtocol: AnyObject {
+    func goToMovieDetails(with movie: Movie)
+}
+
+protocol MovieDetailsCoordinatorDelegate: AnyObject {
+    func dismissMovieDetails()
+}
+
 final class MovieDetailsCoordinator: Coordinator {
+    
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     
@@ -31,10 +40,14 @@ final class MovieDetailsCoordinator: Coordinator {
     func start() {
         navigationController.present(self.makeViewController(), animated: true)
     }
+    
+    func finish() {
+        parentCoordinator?.childDidFinish(self)
+    }
 }
 
-extension MovieDetailsCoordinator {
+extension MovieDetailsCoordinator: MovieDetailsCoordinatorDelegate{
     func dismissMovieDetails() {
-        parentCoordinator?.childDidFinish(self)
+        finish()
     }
 }

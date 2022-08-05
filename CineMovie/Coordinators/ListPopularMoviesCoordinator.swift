@@ -38,7 +38,7 @@ final class ListPopularMoviesCoordinator: Coordinator {
     }
 }
 
-extension ListPopularMoviesCoordinator {
+extension ListPopularMoviesCoordinator: MovieDetailsCoordinatorProtocol {
     func goToMovieDetails(with movie: Movie) {
         let movieDetailsCoordinator = MovieDetailsCoordinator(
             navigationController: navigationController,
