@@ -18,13 +18,4 @@ extension Coordinator {
     func finish() {
         parentCoordinator?.childCoordinators.removeAll { $0 === self }
     }
-    
-    func childDidFinish(_ coordinator: Coordinator){
-        for (index, child) in childCoordinators.enumerated() {
-            if child === coordinator {
-                childCoordinators.remove(at: index)
-                break
-            }
-        }
-    }
 }

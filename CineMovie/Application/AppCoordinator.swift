@@ -1,13 +1,16 @@
 //
-//  TabBarCoordinator.swift
+//  AppCordinator.swift
 //  CineMovie
 //
-//  Created by Renan Consalter on 18/07/22.
+//  Created by Renan Consalter on 15/07/22.
 //
 
 import UIKit
 
-final class TabBarCoordinator: Coordinator {
+final class AppCoordinator: Coordinator {
+    
+    // MARK: Properties
+    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     
@@ -26,6 +29,8 @@ final class TabBarCoordinator: Coordinator {
     var rootViewController: UIViewController {
         return tabBarController
     }
+
+    // MARK: Methods
     
     func start() {
         let listTopRatedMoviesCoordinator = ListTopRatedMoviesCoordinator()
