@@ -1,5 +1,5 @@
 //
-//  HttpClient.swift
+//  HTTPClient.swift
 //  CineMovie
 //
 //  Created by Renan Consalter on 28/06/22.
@@ -7,22 +7,22 @@
 
 import Foundation
 
-protocol HttpClientProtocol {
+protocol HTTPClientProtocol {
     func request<T: Decodable>(endpoint: Endpoint,
                                model: T.Type,
                                completion: @escaping (Result<T, ErrorHandler>) -> Void)
 }
 
-final class HttpClient: HttpClientProtocol {
+final class HTTPClient: HTTPClientProtocol {
     
-    static let shared = HttpClient()
+    static let shared = HTTPClient()
     
     func request<T>(endpoint: Endpoint,
                     model: T.Type,
                     completion: @escaping (Result<T, ErrorHandler>) -> Void)
                     where T : Decodable {
 
-        guard let url = endpoint.completeUrl else {
+        guard let url = endpoint.completeURL else {
             completion(.failure(.invalidURL))
             return
         }
@@ -30,6 +30,7 @@ final class HttpClient: HttpClientProtocol {
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = endpoint.header
         request.httpMethod = endpoint.method.rawValue
+        request.timeoutInterval = endpoint.timeout
         
         if let body = endpoint.body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body)
