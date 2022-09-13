@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol SearchMoviesCoordinatorProtocol: AnyObject {
+    func goToMovieDetails(with movie: Movie)
+}
+
 final class SearchMoviesCoordinator: Coordinator {
+    
+    // MARK: Properties
+    
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     
@@ -17,19 +24,17 @@ final class SearchMoviesCoordinator: Coordinator {
         navigationController.tabBarItem = UITabBarItem(
             title: Constants.Menus.search,
             image: UIImage(systemName: Constants.Icons.search),
-            selectedImage: UIImage(systemName: Constants.Icons.search)
+            selectedImage: UIImage(systemName: Constants.Icons.searchTextFill)
         )
         return navigationController
     }
     
+    // MARK: Methods
+    
     private func makeViewController() -> SearchMoviesViewController {
-        let viewController = SearchMoviesViewController()
         let viewModel = SearchMoviesViewModel()
         viewModel.coordinator = self
-        viewController.viewModel = viewModel
-        viewController.title = Constants.Menus.search
-        
-        return viewController
+        return SearchMoviesViewController(viewModel: viewModel)
     }
     
     func start() {
@@ -37,7 +42,9 @@ final class SearchMoviesCoordinator: Coordinator {
     }
 }
 
-extension SearchMoviesCoordinator: MovieDetailsCoordinatorProtocol {
+// MARK: SearchMoviesCoordinatorProtocol Methods
+
+extension SearchMoviesCoordinator: SearchMoviesCoordinatorProtocol {
     func goToMovieDetails(with movie: Movie) {
         let movieDetailsCoordinator = MovieDetailsCoordinator(
             navigationController: navigationController,

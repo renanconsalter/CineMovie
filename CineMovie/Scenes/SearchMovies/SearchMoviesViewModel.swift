@@ -8,24 +8,35 @@
 import Foundation
 
 protocol SearchMoviesViewModelDelegate: AnyObject {
-    func didFindMovies()
-    func didFail(error: ErrorHandler)
+    func showTableViewHeaderLoading()
+    func hideLoading()
     func showEmptyState()
     func showNoResultsState()
+    func reloadData()
+    func didFail(with error: ErrorHandler)
+    func setNavigationTitle(to value: String)
 }
 
 final class SearchMoviesViewModel {
-
-    private let service: MoviesServiceProtocol
     
-    init(service: MoviesServiceProtocol = MoviesService.shared) {
+    // MARK: Properties
+
+    private let service: SearchMoviesServiceProtocol
+    
+    private var movies: [Movie] = []
+    
+    weak var delegate: SearchMoviesViewModelDelegate?
+    weak var coordinator: SearchMoviesCoordinatorProtocol?
+    
+    // MARK: Initialization
+    
+    init(
+        service: SearchMoviesServiceProtocol = SearchMoviesService()
+    ) {
         self.service = service
     }
     
-    var movies: [Movie] = []
-    
-    weak var delegate: SearchMoviesViewModelDelegate?
-    weak var coordinator: MovieDetailsCoordinatorProtocol?
+    // MARK: Methods
     
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
@@ -33,6 +44,10 @@ final class SearchMoviesViewModel {
     
     func numberOfRows() -> Int {
         return movies.count
+    }
+    
+    func setNavigationTitle() {
+        delegate?.setNavigationTitle(to: Constants.Menus.search)
     }
     
     func didSelectRow(at indexPath: IndexPath) {
@@ -47,23 +62,24 @@ final class SearchMoviesViewModel {
         case 0:
             self.movies = []
             self.delegate?.showEmptyState()
+            self.delegate?.hideLoading()
         default:
+            self.delegate?.showTableViewHeaderLoading()
             service.searchMovie(query: query) { [weak self] result in
                 switch result {
                 case .success(let movies):
-                    let noResults = movies.results.isEmpty
                     self?.movies = movies.results
-                    
+                    let noResults = movies.results.isEmpty
                     if noResults {
                         self?.delegate?.showNoResultsState()
                     } else {
-                        self?.delegate?.didFindMovies()
+                        self?.delegate?.reloadData()
                     }
                 case .failure(let error):
-                    self?.delegate?.didFail(error: error)
+                    self?.delegate?.didFail(with: error)
                 }
+                self?.delegate?.hideLoading()
             }
         }
     }
 }
-
