@@ -8,14 +8,12 @@
 import UIKit
 
 protocol MovieDetailsCoordinatorProtocol: AnyObject {
-    func goToMovieDetails(with movie: Movie)
-}
-
-protocol MovieDetailsCoordinatorDelegate: AnyObject {
     func dismissMovieDetails()
 }
 
 final class MovieDetailsCoordinator: Coordinator {
+    
+    // MARK: Properties
     
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
@@ -28,26 +26,24 @@ final class MovieDetailsCoordinator: Coordinator {
         self.movie = movie
     }
     
+    // MARK: Methods
+    
     private func makeViewController() -> MovieDetailsViewController {
-        let viewController = MovieDetailsViewController()
         let viewModel = MovieDetailsViewModel(movie: self.movie)
         viewModel.coordinator = self
-        viewController.viewModel = viewModel
-        
-        return viewController
+        return MovieDetailsViewController(viewModel: viewModel)
     }
     
     func start() {
         navigationController.present(self.makeViewController(), animated: true)
     }
-    
-    func finish() {
-        parentCoordinator?.childDidFinish(self)
-    }
 }
 
-extension MovieDetailsCoordinator: MovieDetailsCoordinatorDelegate{
+// MARK: MovieDetailsCoordinatorProtocol Methods
+
+extension MovieDetailsCoordinator: MovieDetailsCoordinatorProtocol {
     func dismissMovieDetails() {
+        navigationController.dismiss(animated: true)
         finish()
     }
 }

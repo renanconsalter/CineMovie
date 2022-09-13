@@ -8,25 +8,33 @@
 import Foundation
 
 protocol MovieDetailsViewModelDelegate: AnyObject {
+    func showLoading()
+    func hideLoading()
     func didLoadMovieDetails()
-    func didFail(error: ErrorHandler)
+    func didFail(with error: ErrorHandler)
 }
 
 final class MovieDetailsViewModel {
     
+    // MARK: Properties
+    
     private var movie: Movie
-    private var service: MoviesServiceProtocol
+    private var service: MovieDetailsServiceProtocol
     
     weak var delegate: MovieDetailsViewModelDelegate?
-    weak var coordinator: MovieDetailsCoordinatorDelegate?
+    weak var coordinator: MovieDetailsCoordinatorProtocol?
+    
+    // MARK: Initialization
     
     init(
-        service: MoviesServiceProtocol = MoviesService.shared,
+        service: MovieDetailsServiceProtocol = MovieDetailsService(),
         movie: Movie
     ) {
         self.service = service
         self.movie = movie
     }
+    
+    // MARK: Presentation Properties
     
     var id: Int {
         return movie.id
@@ -34,9 +42,9 @@ final class MovieDetailsViewModel {
     
     var backdropImageURL: String {
         guard let posterPath = movie.backdropPath else {
-            return Constants.ApiImageURL.backdropPlaceholder
+            return Constants.ImageURL.backdropPlaceholder
         }
-        return Constants.ApiImageURL.highQuality + posterPath
+        return Constants.ImageURL.highQuality + posterPath
     }
     
     var title: String {
@@ -82,14 +90,18 @@ final class MovieDetailsViewModel {
         return hasScore ? "\(truncatedScore)/10" : Constants.notAvailable
     }
     
+    // MARK: Methods
+    
     func getMovie() {
+        delegate?.showLoading()
         service.getMovie(id: movie.id) { [weak self] result in
             switch result {
             case .success(let movie):
                 self?.movie = movie
                 self?.delegate?.didLoadMovieDetails()
+                self?.delegate?.hideLoading()
             case .failure(let error):
-                self?.delegate?.didFail(error: error)
+                self?.delegate?.didFail(with: error)
             }
         }
     }
@@ -98,6 +110,8 @@ final class MovieDetailsViewModel {
         coordinator?.dismissMovieDetails()
     }
 }
+
+// MARK: Utility Extensions
 
 extension MovieDetailsViewModel {
     func convertMinutesToHoursAndMinutes(runtime: Int) -> String? {

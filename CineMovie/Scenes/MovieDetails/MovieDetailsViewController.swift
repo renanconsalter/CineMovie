@@ -9,12 +9,9 @@ import UIKit
 
 final class MovieDetailsViewController: UIViewController {
     
-    // MARK: - ViewModel & Views
-    var viewModel: MovieDetailsViewModel! {
-        didSet {
-            viewModel.delegate = self
-        }
-    }
+    // MARK: Properties
+    
+    private let viewModel: MovieDetailsViewModel
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -71,16 +68,31 @@ final class MovieDetailsViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: Constants.Icons.close), for: .normal)
         button.tintColor = UIColor(named: Constants.Colors.starYellow)
+        button.backgroundColor = UIColor(white: 0.25, alpha: 1)
+        button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    // MARK: - Lifecycle/Configuration/Setup Methods
+    // MARK: Initialization
+    
+    init(viewModel: MovieDetailsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
         configureButton()
         configureConstraints()
+        configureDelegates()
         loadData()
     }
     
@@ -89,9 +101,10 @@ final class MovieDetailsViewController: UIViewController {
         viewModel.didFinishShowDetails()
     }
     
+    // MARK: Configuration/Setup
+    
     private func configureViews() {
         view.backgroundColor = .systemBackground
-        
         view.addSubview(scrollView)
         
         scrollView.addSubview(imgView)
@@ -104,22 +117,19 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func configureButton() {
-        closeButton.addTarget(
-            self,
-            action: #selector(didTapClose),
-            for: .touchUpInside
-        )
+        closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
+    }
+    
+    @objc private func didTapClose() {
+        viewModel.didFinishShowDetails()
     }
     
     private func configureConstraints() {
-        
         let aspectRatio: CGFloat = 16 / 9
         let imageWidth: CGFloat = view.frame.size.width
         let imageHeight: CGFloat = imageWidth / aspectRatio
-        let iconSize: CGFloat = 25
-        
         let padding: CGFloat = 12
-        let labelSize = view.frame.size.width - 20
+        let buttonSize: CGFloat = 30
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -127,27 +137,27 @@ final class MovieDetailsViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            imgView.heightAnchor.constraint(equalToConstant: imageHeight),
-            imgView.widthAnchor.constraint(equalToConstant: imageWidth),
             imgView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             imgView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            imgView.heightAnchor.constraint(equalToConstant: imageHeight),
+            imgView.widthAnchor.constraint(equalToConstant: imageWidth),
             
-            closeButton.heightAnchor.constraint(equalToConstant: iconSize),
-            closeButton.widthAnchor.constraint(equalToConstant: iconSize),
             closeButton.topAnchor.constraint(equalTo: imgView.topAnchor, constant: padding),
             closeButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: -padding),
+            closeButton.widthAnchor.constraint(equalToConstant: buttonSize),
+            closeButton.heightAnchor.constraint(equalToConstant: buttonSize),
             
-            titleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             titleLabel.topAnchor.constraint(equalTo: imgView.bottomAnchor, constant: padding),
             titleLabel.leadingAnchor.constraint(equalTo: imgView.leadingAnchor, constant: padding),
+            titleLabel.trailingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: -padding),
             
-            subtitleLabel.widthAnchor.constraint(equalToConstant: labelSize),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            overviewLabel.widthAnchor.constraint(equalToConstant: labelSize),
             overviewLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding),
             overviewLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
+            overviewLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
             ratingLabel.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: padding),
             ratingLabel.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
@@ -158,41 +168,64 @@ final class MovieDetailsViewController: UIViewController {
         ])
     }
     
-    @objc private func didTapClose() {
-        dismiss(animated: true, completion: nil)
+    private func configureDelegates() {
+        viewModel.delegate = self
     }
     
-    // MARK: - Data Manipulation
+    // MARK: Data Manipulation Methods
+    
     private func loadData() {
-        showSpinner()
         viewModel.getMovie()
-    }
-    
-    private func updateView() {
-        imgView.loadImage(from: viewModel.backdropImageURL)
-        overviewLabel.text = viewModel.overview
-        ratingLabel.text = viewModel.ratingStars
-        scoreLabel.text = viewModel.score
-        subtitleLabel.text = viewModel.subtitle
-        titleLabel.text = viewModel.title
     }
 }
 
-// MARK: - MovieDetailsViewModelDelegate Methods
-extension MovieDetailsViewController: MovieDetailsViewModelDelegate {
+
+// MARK: UI Update
+
+extension MovieDetailsViewController {
+    private func updateView() {
+        imgView.loadImage(
+            from: viewModel.backdropImageURL,
+            placeholder: UIImage(named: Constants.Images.backdropPlaceholder)
+        )
+        titleLabel.text = viewModel.title
+        subtitleLabel.text = viewModel.subtitle
+        overviewLabel.text = viewModel.overview
+        ratingLabel.text = viewModel.ratingStars
+        scoreLabel.text = viewModel.score
+    }
+}
+
+// MARK: MovieDetailsViewModelDelegate Methods
+
+extension MovieDetailsViewController: MovieDetailsViewModelDelegate, Loadable, Alertable {
+    func showLoading() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.showSpinner(on: self.view)
+        }
+    }
+    
+    func hideLoading() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.removeSpinner(on: self.view)
+        }
+    }
+    
     func didLoadMovieDetails() {
         DispatchQueue.main.async { [weak self] in
-            self?.hideSpinner()
             self?.updateView()
         }
     }
     
-    func didFail(error: ErrorHandler) {
+    func didFail(with error: ErrorHandler) {
         DispatchQueue.main.async { [weak self] in
-            self?.hideSpinner()
-            self?.showAlert(message: error.customMessage) { [weak self] _ in
-                self?.loadData()
-            }
+            guard let self = self else { return }
+            self.showActionAlert(
+                message: error.customMessage,
+                action: self.loadData
+            )
         }
     }
 }
