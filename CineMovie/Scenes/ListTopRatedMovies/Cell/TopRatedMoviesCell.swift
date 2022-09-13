@@ -9,7 +9,8 @@ import UIKit
 
 final class TopRatedMoviesCell: UITableViewCell {
     
-    // MARK: - Views
+    // MARK: Properties
+    
     private let movieImage: CachedImageView = {
         let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
@@ -48,7 +49,8 @@ final class TopRatedMoviesCell: UITableViewCell {
         return label
     }()
     
-    // MARK: - Init Methods
+    // MARK: Initializaton
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViews()
@@ -59,15 +61,8 @@ final class TopRatedMoviesCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        movieImage.image = nil
-        titleLabel.text = nil
-        subtitleLabel.text = nil
-        ratingLabel.text = nil
-        super.prepareForReuse()
-    }
+    // MARK: Configuration/Setup
     
-    // MARK: - Configuration/Setup Methods
     private func configureViews() {
         contentView.addSubview(movieImage)
         contentView.addSubview(titleLabel)
@@ -77,34 +72,49 @@ final class TopRatedMoviesCell: UITableViewCell {
     }
     
     private func configureConstraints() {
-        let imageSize: CGFloat = 120
+        let heightImageSize: CGFloat = 120
+        // A movie poster has 3:2 dimension, so aspect ratio is 1.5
+        let aspectRatio: CGFloat = 3 / 2
+        let widthImageSize: CGFloat = heightImageSize / aspectRatio
         let padding: CGFloat = 12
-        let labelSize: CGFloat = contentView.frame.size.width - (imageSize / 2) - 10
+        let starRatingSpacing: CGFloat = 3
         
         NSLayoutConstraint.activate([
-            movieImage.heightAnchor.constraint(equalToConstant: imageSize),
-            movieImage.widthAnchor.constraint(equalToConstant: imageSize),
-            movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            movieImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
+            movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            movieImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
+            movieImage.widthAnchor.constraint(equalToConstant: widthImageSize),
+            movieImage.heightAnchor.constraint(equalToConstant: heightImageSize),
             
-            titleLabel.widthAnchor.constraint(equalToConstant: labelSize),
-            titleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor),
             titleLabel.topAnchor.constraint(equalTo: movieImage.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: padding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
-            subtitleLabel.widthAnchor.constraint(equalToConstant: labelSize),
-            subtitleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            starImgView.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
             starImgView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding),
+            starImgView.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
             
-            ratingLabel.leadingAnchor.constraint(equalTo: starImgView.trailingAnchor, constant: 3),
-            ratingLabel.centerYAnchor.constraint(equalTo: starImgView.centerYAnchor)
+            ratingLabel.leadingAnchor.constraint(equalTo: starImgView.trailingAnchor, constant: starRatingSpacing),
+            ratingLabel.centerYAnchor.constraint(equalTo: starImgView.centerYAnchor),
         ])
     }
     
-    func configure(viewModel: TopRatedMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.posterImageURL)
+    override func prepareForReuse() {
+        movieImage.image = nil
+        titleLabel.text = nil
+        subtitleLabel.text = nil
+        ratingLabel.text = nil
+        super.prepareForReuse()
+    }
+    
+    func setup(with viewModel: TopRatedMoviesCellViewModel) {
+        movieImage.loadImage(
+            from: viewModel.posterImageURL,
+            placeholder: UIImage(named: Constants.Images.posterPlaceholder)
+        )
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         ratingLabel.text = viewModel.rating

@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol ListTopRatedMoviesCoordinatorProtocol: AnyObject {
+    func goToMovieDetails(with movie: Movie)
+}
+
 final class ListTopRatedMoviesCoordinator: Coordinator {
+    
+    // MARK: Properties
+    
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     
@@ -23,14 +30,12 @@ final class ListTopRatedMoviesCoordinator: Coordinator {
         return navigationController
     }
     
+    // MARK: Methods
+    
     private func makeViewController() -> ListTopRatedMoviesViewController {
-        let viewController = ListTopRatedMoviesViewController()
         let viewModel = ListTopRatedMoviesViewModel()
         viewModel.coordinator = self
-        viewController.viewModel = viewModel
-        viewController.title = Constants.Menus.topRated
-        
-        return viewController
+        return ListTopRatedMoviesViewController(viewModel: viewModel)
     }
     
     func start() {
@@ -38,7 +43,9 @@ final class ListTopRatedMoviesCoordinator: Coordinator {
     }
 }
 
-extension ListTopRatedMoviesCoordinator: MovieDetailsCoordinatorProtocol {
+// MARK: ListTopRatedMoviesCoordinatorProtocol Methods
+
+extension ListTopRatedMoviesCoordinator: ListTopRatedMoviesCoordinatorProtocol {
     func goToMovieDetails(with movie: Movie) {
         let movieDetailsCoordinator = MovieDetailsCoordinator(
             navigationController: navigationController,

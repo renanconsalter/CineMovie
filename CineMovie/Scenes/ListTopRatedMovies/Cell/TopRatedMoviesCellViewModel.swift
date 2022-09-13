@@ -7,19 +7,25 @@
 
 import Foundation
 
-final class TopRatedMoviesCellViewModel {
+struct TopRatedMoviesCellViewModel {
+    
+    // MARK: Properties
     
     private let movie: Movie
+    
+    // MARK: Initialization
     
     init(movie: Movie) {
         self.movie = movie
     }
     
+    // MARK: Presentation Properties
+    
     var posterImageURL: String {
         guard let posterPath = movie.posterPath else {
-            return Constants.ApiImageURL.posterPlaceholder
+            return Constants.ImageURL.posterPlaceholder
         }
-        return Constants.ApiImageURL.lowQuality + posterPath
+        return Constants.ImageURL.lowQuality + posterPath
     }
     
     var title: String {
@@ -39,6 +45,6 @@ final class TopRatedMoviesCellViewModel {
     }
 
     var rating: String {
-        return "\(movie.voteAverage)"
+        return String(movie.voteAverage)
     }
 }
