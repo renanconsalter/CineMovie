@@ -9,7 +9,8 @@ import UIKit
 
 final class PopularMoviesCell: UICollectionViewCell {
     
-    // MARK: - View
+    // MARK: Properties
+    
     private let movieImage: CachedImageView = {
         let imageView = CachedImageView()
         imageView.contentMode = .scaleAspectFit
@@ -17,7 +18,8 @@ final class PopularMoviesCell: UICollectionViewCell {
         return imageView
     }()
     
-    // MARK: - Init Methods
+    // MARK: Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(movieImage)
@@ -27,7 +29,8 @@ final class PopularMoviesCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Configuration/Setup Methods
+    // MARK: Configuration/Setup
+    
     override func layoutSubviews() {
         configureConstraints()
         super.layoutSubviews()
@@ -47,7 +50,10 @@ final class PopularMoviesCell: UICollectionViewCell {
         ])
     }
 
-    func configure(viewModel: PopularMoviesCellViewModel) {
-        movieImage.loadImage(from: viewModel.posterImageURL)
+    func setup(with viewModel: PopularMoviesCellViewModel) {
+        movieImage.loadImage(
+            from: viewModel.posterImageURL,
+            placeholder: UIImage(named: Constants.Images.posterPlaceholder)
+        )
     }
 }

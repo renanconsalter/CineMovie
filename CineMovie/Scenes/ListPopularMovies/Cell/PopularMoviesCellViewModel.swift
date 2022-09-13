@@ -7,18 +7,24 @@
 
 import Foundation
 
-final class PopularMoviesCellViewModel {
+struct PopularMoviesCellViewModel {
+    
+    // MARK: Properties
     
     private let movie: Movie
+    
+    // MARK: Initialization
     
     init(movie: Movie) {
         self.movie = movie
     }
     
+    // MARK: Presentation Properties
+    
     var posterImageURL: String {
         guard let posterPath = movie.posterPath else {
-            return Constants.ApiImageURL.posterPlaceholder
+            return Constants.ImageURL.posterPlaceholder
         }
-        return Constants.ApiImageURL.mediumQuality + posterPath
+        return Constants.ImageURL.mediumQuality + posterPath
     }
 }
