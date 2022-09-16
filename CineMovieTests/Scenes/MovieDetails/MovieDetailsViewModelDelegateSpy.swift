@@ -17,9 +17,11 @@ final class MovieDetailsViewModelDelegateSpy: MovieDetailsViewModelDelegate {
     }
     
     private(set) var didFailCalled: Bool = false
+    private(set) var didFailErrorPassed: ErrorHandler?
     
     func didFail(with error: ErrorHandler) {
         didFailCalled = true
+        didFailErrorPassed = error
     }
     
     private(set) var showLoadingStateCalled: Bool = false
