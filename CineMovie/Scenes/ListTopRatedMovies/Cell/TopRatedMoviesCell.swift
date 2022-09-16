@@ -72,12 +72,19 @@ final class TopRatedMoviesCell: UITableViewCell {
     }
     
     private func configureConstraints() {
+        let aspectRatio: CGFloat = 3 / 2  // A movie poster has 3:2 dimension, so aspect ratio is 1.5
+        
         let heightImageSize: CGFloat = 120
-        // A movie poster has 3:2 dimension, so aspect ratio is 1.5
-        let aspectRatio: CGFloat = 3 / 2
         let widthImageSize: CGFloat = heightImageSize / aspectRatio
         let padding: CGFloat = 12
         let starRatingSpacing: CGFloat = 3
+        
+        // Set a constraint priority to avoid warnings and specify to autolayout the correct height of cell
+        // Source:
+        // https://stackoverflow.com/questions/32172250/uitableview-auto-resizing-row-constraint-breaking-mysteriously-on-iphone-6plus/32283863#32283863
+        
+        let heightAnchor = movieImage.heightAnchor.constraint(equalToConstant: heightImageSize)
+        heightAnchor.priority = .defaultHigh
         
         NSLayoutConstraint.activate([
             movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
