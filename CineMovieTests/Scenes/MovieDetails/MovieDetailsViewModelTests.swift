@@ -10,7 +10,7 @@ import XCTest
 @testable import CineMovie
 
 final class MovieDetailsViewModelTests: XCTestCase {
-    private let serviceSpy = MoviesServiceSpy()
+    private let serviceSpy = MovieDetailsServiceSpy()
     private let delegateSpy = MovieDetailsViewModelDelegateSpy()
     private let coordinatorSpy = MovieDetailsCoordinatorSpy()
     private let movieMock = Movie.fixture(
@@ -32,7 +32,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         movie: movieMock
     )
     
-    // MARK: - id
+    // MARK: id
+    
     func test_movieDetails_isValid_and_notNil() {
         // Given
         let idToTest: Int = 25
@@ -48,10 +49,11 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(idToTest, viewModelMovieId)
     }
     
-    // MARK: - Backdrop Image
+    // MARK: Backdrop Image
+    
     func test_movieDetails_whenBackdropImagePathIsValid_and_notNil() {
         // Given
-        let backdropImagePathBaseURL = Constants.ApiImageURL.highQuality
+        let backdropImagePathBaseURL = Constants.ImageURL.highQuality
         let backdropPathToTest: String = "/backdrop.jpg"
         let viewModelToTest = createSUT(
             with: Movie.fixture(backdropPath: backdropPathToTest)
@@ -71,7 +73,7 @@ final class MovieDetailsViewModelTests: XCTestCase {
     
     func test_movieDetails_whenBackdropImagePathIsNil_or_doesntExist_shouldReturnPlaceholder() {
         // Given
-        let backdropPlaceholder = Constants.ApiImageURL.backdropPlaceholder
+        let backdropPlaceholder = Constants.ImageURL.backdropPlaceholder
         let viewModelToTest = createSUT(
             with: Movie.fixture(backdropPath: nil)
         )
@@ -84,7 +86,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(backdropPlaceholder, viewModelBackdropImageURL)
     }
     
-    // MARK: - Title
+    // MARK: Title
+    
     func test_movieDetails_title_isNotNil() {
         // Given
         let titleToTest: String = "The Godfather"
@@ -100,7 +103,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(titleToTest, viewModelTitle)
     }
     
-    // MARK: - Primary Genre
+    // MARK: Primary Genre
+    
     func test_movieDetails_primaryGenre_notNil() {
         // Given
         let genresToTest: [MovieGenre] = [
@@ -134,7 +138,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(Constants.notAvailable, viewModelPrimaryGenre)
     }
     
-    // MARK: - Subtitle
+    // MARK: Subtitle
+    
     func test_movieDetails_subtitle_whenRuntimeIsNil_or_doesntExist() {
         // Given
         let viewModelToTest = createSUT(
@@ -195,7 +200,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(formattedSubtitle, viewModelSubtitle)
     }
     
-    // MARK: - Overview
+    // MARK: Overview
+    
     func test_movieDetails_overview_isNotNil() {
         // Given
         let overviewToTest: String = "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge."
@@ -213,7 +219,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(overviewToTest, viewModelOverview)
     }
     
-    // MARK: - Rating Stars
+    // MARK: Rating Stars
+    
     func test_movieDetails_ratingStars_isNotNil() {
         // Given
         let ratingToTest: Double = 9.2
@@ -233,7 +240,8 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(ratingStarsToTest, viewModelRatingStars)
     }
     
-    // MARK: - Score
+    // MARK: Score
+    
     func test_movieDetails_score_isNotNil_and_moreThanZero() {
         // Given
         let scoreToTest: Double = 9.256
@@ -267,54 +275,73 @@ final class MovieDetailsViewModelTests: XCTestCase {
         XCTAssertEqual(Constants.notAvailable, viewModelScore)
     }
     
-    func test_getMovie_shouldCallServiceGetMovie() {
+    func test_getMovie_shouldCallServiceGetMovie_oneTimeOnly() {
+        // Given
+        let callCount = 1
+        sut.delegate = delegateSpy
+        
+        // When
         sut.getMovie()
         
+        // Then
+        XCTAssertTrue(delegateSpy.showLoadingStateCalled)
         XCTAssertTrue(serviceSpy.getMovieCalled)
-    }
-    
-    func test_getMovie_shouldCallServiceGetMovieOnce() {
-        sut.getMovie()
-        
-        XCTAssertEqual(serviceSpy.getMovieCount, 1)
+        XCTAssertEqual(serviceSpy.getMovieCount, callCount)
     }
     
     func test_getMovie_sholdCallServiceGetMovie_withMovieId() {
+        // Given
+        sut.delegate = delegateSpy
+        
+        // When
         sut.getMovie()
         
+        // Then
+        XCTAssertTrue(delegateSpy.showLoadingStateCalled)
         XCTAssertEqual(serviceSpy.getMovieIdPassed, movieMock.id)
     }
     
-    func test_getMovie_shouldTrigger_didLoadMovieDetails_delegate() {
+    func test_getMovie_shouldTrigger_didLoadMovieDetails() {
+        // Given
         serviceSpy.getMovieToBeReturned = movieMock
         sut.delegate = delegateSpy
         
+        // When
         sut.getMovie()
         
-        XCTAssertNotNil(delegateSpy)
+        // Then
         XCTAssertTrue(delegateSpy.didLoadMovieDetailsCalled)
+        XCTAssertTrue(delegateSpy.hideLoadingCalled)
     }
     
-    func test_getMovie_shouldTrigger_didFail_delegate() {
+    func test_getMovie_shouldTrigger_didFail_withError() {
+        // Given
+        let fakeError = ErrorHandler.noResponse
         serviceSpy.getMovieToBeReturned = nil
         sut.delegate = delegateSpy
         
+        // When
         sut.getMovie()
         
-        XCTAssertNotNil(delegateSpy)
+        // Then
         XCTAssertTrue(delegateSpy.didFailCalled)
+        XCTAssertEqual(delegateSpy.didFailErrorPassed, fakeError)
     }
     
     func test_didFinishShowDetails_dismissMovieDetails_usingCoordinator() {
+        // Given
         sut.coordinator = coordinatorSpy
         
+        // When
         sut.didFinishShowDetails()
         
+        // Then
         XCTAssertTrue(coordinatorSpy.dismissMovieDetailsCalled)
     }
 }
 
-// MARK: - Create SUT Helper
+// MARK: Create SUT Helper
+
 extension MovieDetailsViewModelTests {
     private func createSUT(with movie: Movie) -> MovieDetailsViewModel {
         return MovieDetailsViewModel(movie: movie)
