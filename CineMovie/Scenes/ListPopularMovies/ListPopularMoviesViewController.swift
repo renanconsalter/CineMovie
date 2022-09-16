@@ -120,7 +120,7 @@ extension ListPopularMoviesViewController: UICollectionViewDelegate, UICollectio
         let lastSection = collectionView.numberOfSections - 1
         let lastItem = collectionView.numberOfItems(inSection: lastSection) - 1
         if indexPath.section == lastSection && indexPath.row == lastItem {
-            viewModel.userRequestMoreData()
+            viewModel.userRequestedMoreData()
         }
     }
 }
@@ -153,9 +153,7 @@ extension ListPopularMoviesViewController {
 
 extension ListPopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        // A movie poster has 3:2 dimension, so aspect ratio is 1.5
-        let aspectRatio: CGFloat = 3 / 2
+        let aspectRatio: CGFloat = 3 / 2  // A movie poster has 3:2 dimension, so aspect ratio is 1.5
         
         let numberOfItemsInRow: CGFloat = 3
 

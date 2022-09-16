@@ -61,10 +61,11 @@ final class ListTopRatedMoviesViewModel {
         getTopRatedMovies()
     }
     
-    func userRequestMoreData() {
-        guard !isLoading else { return }
-        delegate?.showPaginationLoading()
-        getTopRatedMovies()
+    func userRequestedMoreData() {
+        if !isLoading {
+            delegate?.showPaginationLoading()
+            getTopRatedMovies()
+        }
     }
     
     private func getTopRatedMovies() {

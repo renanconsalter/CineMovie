@@ -61,10 +61,11 @@ final class ListPopularMoviesViewModel {
         getPopularMovies()
     }
     
-    func userRequestMoreData() {
-        guard !isLoading else { return }
-        delegate?.showPaginationLoading()
-        getPopularMovies()
+    func userRequestedMoreData() {
+        if !isLoading {
+            delegate?.showPaginationLoading()
+            getPopularMovies()
+        }
     }
     
     private func getPopularMovies() {

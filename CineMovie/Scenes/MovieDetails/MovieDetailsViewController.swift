@@ -125,7 +125,8 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func configureConstraints() {
-        let aspectRatio: CGFloat = 16 / 9
+        let aspectRatio: CGFloat = 16 / 9  // The background image has 16:9 dimension
+        
         let imageWidth: CGFloat = view.frame.size.width
         let imageHeight: CGFloat = imageWidth / aspectRatio
         let padding: CGFloat = 12

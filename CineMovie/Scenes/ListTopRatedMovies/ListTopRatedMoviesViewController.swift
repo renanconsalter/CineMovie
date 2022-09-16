@@ -20,8 +20,6 @@ final class ListTopRatedMoviesViewController: UIViewController {
         )
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 144
         return tableView
     }()
     
@@ -110,7 +108,7 @@ extension ListTopRatedMoviesViewController: UITableViewDelegate, UITableViewData
         let lastSection = tableView.numberOfSections - 1
         let lastRow = tableView.numberOfRows(inSection: lastSection) - 1
         if indexPath.section == lastSection && indexPath.row == lastRow {
-            viewModel.userRequestMoreData()
+            viewModel.userRequestedMoreData()
         }
     }
 }
