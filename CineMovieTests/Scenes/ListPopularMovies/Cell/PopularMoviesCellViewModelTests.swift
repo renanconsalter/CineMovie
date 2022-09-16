@@ -10,10 +10,12 @@ import XCTest
 @testable import CineMovie
 
 final class PopularMoviesCellViewModelTests: XCTestCase {
-    // MARK: - PosterPath Image
+    
+    // MARK: PosterPath Image
+    
     func test_popularMoviesCell_whenPosterPathIsValid_and_notNil() {
         // Given
-        let posterImagePathBaseURL = Constants.ApiImageURL.mediumQuality
+        let posterImagePathBaseURL = Constants.ImageURL.mediumQuality
         let posterPathToTest = "/posterImage.jpg"
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: posterPathToTest)
@@ -32,7 +34,7 @@ final class PopularMoviesCellViewModelTests: XCTestCase {
     
     func test_popularMoviesCell_whenPosterPathIsNil_or_doesntExist_shouldReturnPlaceholder() {
         // Given
-        let posterPlaceholder = Constants.ApiImageURL.posterPlaceholder
+        let posterPlaceholder = Constants.ImageURL.posterPlaceholder
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: nil)
         )
@@ -46,7 +48,8 @@ final class PopularMoviesCellViewModelTests: XCTestCase {
     }
 }
 
-// MARK: - Create SUT Helper
+// MARK: Create SUT Helper
+
 extension PopularMoviesCellViewModelTests {
     private func createSUT(with movie: Movie) -> PopularMoviesCellViewModel {
         return PopularMoviesCellViewModel(movie: movie)
