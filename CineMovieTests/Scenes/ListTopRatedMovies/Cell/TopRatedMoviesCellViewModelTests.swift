@@ -10,10 +10,12 @@ import XCTest
 @testable import CineMovie
 
 final class TopRatedMoviesCellViewModelTests: XCTestCase {
-    // MARK: - PosterPath Image
+    
+    // MARK: PosterPath Image
+    
     func test_topRatedMoviesCell_whenPosterPathIsValid_and_notNil() {
         // Given
-        let posterImageBaseURL = Constants.ApiImageURL.lowQuality
+        let posterImageBaseURL = Constants.ImageURL.lowQuality
         let posterPathToTest = "/poster.jpg"
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: posterPathToTest)
@@ -33,7 +35,7 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
     
     func test_topRatedMoviesCell_whenPosterPathIsNil_or_doesntExist_shouldReturnPlaceholder() {
         // Given
-        let posterPlaceholder = Constants.ApiImageURL.posterPlaceholder
+        let posterPlaceholder = Constants.ImageURL.posterPlaceholder
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: nil)
         )
@@ -46,7 +48,8 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
         XCTAssertEqual(posterPlaceholder, viewModelPosterImageURL)
     }
     
-    // MARK: - Title
+    // MARK: Title
+    
     func test_topRatedMoviesCell_title() {
         // Given
         let titleToTest = "The Godfather"
@@ -62,7 +65,8 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
         XCTAssertEqual(titleToTest, viewModelTitle)
     }
     
-    // MARK: - Subtitle
+    // MARK: Subtitle
+    
     func test_topRatedMoviesCell_subtitle_createdBasedOnGenreIds_and_notNil() {
         // Given
         let genresWithIDs = [
@@ -97,7 +101,8 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
         XCTAssertEqual(Constants.notAvailable, viewModelSubtitle)
     }
     
-    // MARK: - Rating
+    // MARK: Rating
+    
     func test_topRatedMoviesCell_rating() {
         // Given
         let ratingToTest = 8.7
@@ -116,7 +121,8 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
     }
 }
 
-// MARK: - Create SUT Helper
+// MARK: Create SUT Helper
+
 extension TopRatedMoviesCellViewModelTests {
     private func createSUT(with movie: Movie) -> TopRatedMoviesCellViewModel {
         return TopRatedMoviesCellViewModel(movie: movie)
