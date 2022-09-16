@@ -9,7 +9,7 @@ import XCTest
 
 @testable import CineMovie
 
-final class MovieDetailsCoordinatorSpy: MovieDetailsCoordinatorDelegate {
+final class MovieDetailsCoordinatorSpy: MovieDetailsCoordinatorProtocol {
     
     private(set) var dismissMovieDetailsCalled = false
     

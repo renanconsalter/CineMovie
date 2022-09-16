@@ -9,7 +9,7 @@ import XCTest
 
 @testable import CineMovie
 
-final class ListTopRatedMoviesCoordinatorSpy: MovieDetailsCoordinatorProtocol {
+final class ListTopRatedMoviesCoordinatorSpy: ListTopRatedMoviesCoordinatorProtocol {
 
     private(set) var goToMovieDetailsCalled = false
     private(set) var goToMovieDetailsPassed: Movie?
