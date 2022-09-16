@@ -84,15 +84,15 @@ final class TopRatedMoviesCell: UITableViewCell {
             movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             movieImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding),
             movieImage.widthAnchor.constraint(equalToConstant: widthImageSize),
-            movieImage.heightAnchor.constraint(equalToConstant: heightImageSize),
+            heightAnchor,
             
             titleLabel.topAnchor.constraint(equalTo: movieImage.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
             
             starImgView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: padding),
             starImgView.leadingAnchor.constraint(equalTo: subtitleLabel.leadingAnchor),
