@@ -20,8 +20,8 @@ final class HTTPClient: HTTPClientProtocol {
     func request<T>(endpoint: Endpoint,
                     model: T.Type,
                     completion: @escaping (Result<T, ErrorHandler>) -> Void)
-                    where T : Decodable {
-
+    where T : Decodable {
+        
         guard let url = endpoint.completeURL else {
             completion(.failure(.invalidURL))
             return
