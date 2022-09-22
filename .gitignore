@@ -2,9 +2,6 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## Property list (.plist) file containing secret API key 
-CineMovie/TMDBAuth-Info.plist
-
 ## User settings
 xcuserdata/
 
