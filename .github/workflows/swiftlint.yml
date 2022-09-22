@@ -1,0 +1,18 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/codelint.yml'
+      - '.swiftlint.yml'
+      - '**/*.swift'
+
+jobs:
+  SwiftLint:
+    name: Check SwiftLint rules in all .swift project files
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Lint code using SwiftLint
+        run: swiftlint lint --reporter github-actions-logging
