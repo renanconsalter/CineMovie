@@ -18,46 +18,45 @@ protocol SearchMoviesViewModelDelegate: AnyObject {
 }
 
 final class SearchMoviesViewModel {
-    
     // MARK: Properties
 
     private let service: SearchMoviesServiceProtocol
-    
+
     private var movies: [Movie] = []
-    
+
     weak var delegate: SearchMoviesViewModelDelegate?
     weak var coordinator: SearchMoviesCoordinatorProtocol?
-    
+
     // MARK: Initialization
-    
+
     init(
         service: SearchMoviesServiceProtocol = SearchMoviesService()
     ) {
         self.service = service
     }
-    
+
     // MARK: Methods
-    
+
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
     }
-    
+
     func numberOfRows() -> Int {
         return movies.count
     }
-    
+
     func setNavigationTitle() {
         delegate?.setNavigationTitle(to: Constants.Menus.search)
     }
-    
+
     func didSelectRow(at indexPath: IndexPath) {
         let movie = getMovie(at: indexPath)
         coordinator?.goToMovieDetails(with: movie)
     }
-    
+
     func searchMovies(with query: String) {
         let characterCount = query.count
-        
+
         switch characterCount {
         case 0:
             self.movies = []

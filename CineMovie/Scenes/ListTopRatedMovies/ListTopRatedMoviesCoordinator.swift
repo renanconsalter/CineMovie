@@ -12,14 +12,13 @@ protocol ListTopRatedMoviesCoordinatorProtocol: AnyObject {
 }
 
 final class ListTopRatedMoviesCoordinator: Coordinator {
-    
     // MARK: Properties
-    
+
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    
+
     private let navigationController: UINavigationController = .init()
-    
+
     var rootViewController: UIViewController {
         navigationController.tabBarItem = UITabBarItem(
             title: Constants.Menus.topRated,
@@ -29,15 +28,15 @@ final class ListTopRatedMoviesCoordinator: Coordinator {
         navigationController.navigationBar.prefersLargeTitles = true
         return navigationController
     }
-    
+
     // MARK: Methods
-    
+
     private func makeViewController() -> ListTopRatedMoviesViewController {
         let viewModel = ListTopRatedMoviesViewModel()
         viewModel.coordinator = self
         return ListTopRatedMoviesViewController(viewModel: viewModel)
     }
-    
+
     func start() {
         navigationController.pushViewController(self.makeViewController(), animated: false)
     }

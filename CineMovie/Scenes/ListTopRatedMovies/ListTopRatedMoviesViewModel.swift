@@ -17,57 +17,56 @@ protocol ListTopRatedMoviesViewModelDelegate: AnyObject {
 }
 
 final class ListTopRatedMoviesViewModel {
-    
     // MARK: Properties
-    
+
     private let service: TopRatedMoviesServiceProtocol
-    
+
     private var movies: [Movie] = []
     private var currentPage: Int = 1
-    private var isLoading: Bool = false
-    
+    private var isLoading = false
+
     weak var delegate: ListTopRatedMoviesViewModelDelegate?
     weak var coordinator: ListTopRatedMoviesCoordinatorProtocol?
-    
+
     // MARK: Initialization
-    
+
     init(
         service: TopRatedMoviesServiceProtocol = TopRatedMoviesService()
     ) {
         self.service = service
     }
-    
+
     // MARK: Methods
-    
+
     func getMovie(at indexPath: IndexPath) -> Movie {
         return movies[indexPath.row]
     }
-    
+
     func numberOfRows() -> Int {
         return movies.count
     }
-    
+
     func didSelectRow(at indexPath: IndexPath) {
         let movie = getMovie(at: indexPath)
         coordinator?.goToMovieDetails(with: movie)
     }
-    
+
     func setNavigationTitle() {
         delegate?.setNavigationTitle(to: Constants.Menus.topRated)
     }
-    
+
     func loadTopRatedMovies() {
         delegate?.showLoading()
         getTopRatedMovies()
     }
-    
+
     func userRequestedMoreData() {
         if !isLoading {
             delegate?.showPaginationLoading()
             getTopRatedMovies()
         }
     }
-    
+
     private func getTopRatedMovies() {
         isLoading = true
         service.getTopRatedMovies(page: currentPage) { [weak self] result in

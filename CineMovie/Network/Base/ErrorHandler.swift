@@ -18,7 +18,7 @@ enum ErrorHandler: Error {
     case badRequest
     case serverError
     case unknown
-    
+
     var customMessage: String {
         switch self {
         case .decode:
@@ -32,7 +32,7 @@ enum ErrorHandler: Error {
         case .badRequest:
             return "Bad request! You provided wrong information to the server."
         case .unauthorized:
-            return "401: You don't have authorization to access this content."
+            return "401: No authorization! Please check if you have a valid API secret key."
         case .notFound:
             return "404: The URL that you are trying to fetch doesn't exist."
         case .serverError:

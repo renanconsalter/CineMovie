@@ -8,12 +8,11 @@
 import UIKit
 
 final class AppCoordinator: Coordinator {
-    
     // MARK: Properties
-    
+
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    
+
     private let tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         let tabBarAppearance = UITabBarAppearance()
@@ -25,22 +24,22 @@ final class AppCoordinator: Coordinator {
         }
         return tabBarController
     }()
-    
+
     var rootViewController: UIViewController {
         return tabBarController
     }
 
     // MARK: Methods
-    
+
     func start() {
         let listTopRatedMoviesCoordinator = ListTopRatedMoviesCoordinator()
         let listPopularMoviesCoordinator = ListPopularMoviesCoordinator()
         let searchMoviesCoordinator = SearchMoviesCoordinator()
-        
+
         childCoordinators.append(listTopRatedMoviesCoordinator)
         childCoordinators.append(listPopularMoviesCoordinator)
         childCoordinators.append(searchMoviesCoordinator)
-        
+
         listTopRatedMoviesCoordinator.parentCoordinator = self
         listPopularMoviesCoordinator.parentCoordinator = self
         searchMoviesCoordinator.parentCoordinator = self
@@ -48,7 +47,7 @@ final class AppCoordinator: Coordinator {
         listTopRatedMoviesCoordinator.start()
         listPopularMoviesCoordinator.start()
         searchMoviesCoordinator.start()
-        
+
         tabBarController.viewControllers = [
             listTopRatedMoviesCoordinator.rootViewController,
             listPopularMoviesCoordinator.rootViewController,
