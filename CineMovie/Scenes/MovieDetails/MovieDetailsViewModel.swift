@@ -86,7 +86,7 @@ final class MovieDetailsViewModel {
         let hasScore = movie.voteAverage > 0
         let truncatedScore = String(format: "%.1f", movie.voteAverage)
 
-        return hasScore ? "\(truncatedScore)/10" : Constants.notAvailable
+        return hasScore ? "\(truncatedScore)/10" : String()
     }
 
     // MARK: Methods
