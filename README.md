@@ -6,7 +6,6 @@
     <img align="left" src="https://github.com/renanconsalter/CineMovie/blob/main/CineMovie/Resources/Assets.xcassets/Logo.imageset/logo.png?raw=true" alt="CineMovie logo" width="175" height="175">
   </div>
   <div>
-    <p>
     
 ![Build/Test Workflow](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml/badge.svg)
 
@@ -16,7 +15,6 @@ You can navigate between Top Rated, Popular or Search movies.
 
 All the information and data used in this project came from the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction).
 
-   </p>
   </div>
 </div>
 <br>
