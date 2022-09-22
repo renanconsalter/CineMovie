@@ -1,5 +1,6 @@
 # CineMovie
 
+<br>
 <div style="display: grid; grid-template-columns: repeat(24, auto);align-items: center;">
 <div>
 <img align="left" src="https://github.com/renanconsalter/CineMovie/blob/main/CineMovie/Resources/Assets.xcassets/Logo.imageset/logo.png?raw=true" alt="CineMovie logo" width="200">
