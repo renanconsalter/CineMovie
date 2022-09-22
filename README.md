@@ -1,25 +1,23 @@
 # CineMovie
 
-<br>
 <div style="display: grid; grid-template-columns: repeat(24, auto);align-items: center;">
-<div>
-<img align="left" src="https://github.com/renanconsalter/CineMovie/blob/main/CineMovie/Resources/Assets.xcassets/Logo.imageset/logo.png?raw=true" alt="CineMovie logo" width="200">
-</div>
-<div>
-<p>
-
+  <div>
+    <img align="left" src="https://github.com/renanconsalter/CineMovie/blob/main/CineMovie/Resources/Assets.xcassets/Logo.imageset/logo.png?raw=true" alt="CineMovie logo" width="200">
+  </div>
+  <div>
+    <p>
+    
 ![Build/Test Workflow](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml/badge.svg)
 
-CineMovie is an iOS app to list and show details of movies around the world.
+The project consists in a application to list and get details of movies around the world.
 
 You can navigate between Top Rated, Popular or Search movies.
 
 All the information and data used in this project came from the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction).
 
-</p>
+   </p>
+  </div>
 </div>
-</div>
-<br>
 
 ## Features
 
