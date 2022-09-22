@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Constants {
+enum Constants {
     static let notAvailable = "N/A"
-    
-    struct Colors {
+
+    enum Colors {
         static let starYellow = "AccentColor"
     }
-    struct Icons {
+    enum Icons {
         static let star = "star"
         static let starFill = "star.fill"
         static let film = "film"
@@ -23,31 +23,31 @@ struct Constants {
         static let close = "xmark"
         static let appLogo = "Logo"
     }
-    struct Images {
+    enum Images {
         static let posterPlaceholder = "PosterPlaceholder"
         static let backdropPlaceholder = "BackdropPlaceholder"
         static let noResults = "NoResults"
     }
-    struct Menus {
+    enum Menus {
         static let topRated = "Top Rated"
         static let popular = "Popular"
         static let search = "Search"
     }
-    struct Search {
+    enum Search {
         static let emptyStateWelcomeText = "Welcome! Type a movie name to start."
         static let emptyStateNoResultsText = "Sorry! We couldn't find any results."
         static let placeholder = "Search movies"
     }
-    struct Alerts {
+    enum Alerts {
         static let defaultTitle = "Oops"
         static let defaultButtonText = "OK"
         static let tryAgainButtonText = "Try Again"
     }
-    struct Identifiers {
+    enum Identifiers {
         static let searchMoviesTableViewIdentifier = "SearchMoviesTableViewCell"
-        static let popularMoviesCollectionViewFooterIdentifier = "popularMoviesCollectionViewFooterIdentifier"
+        static let popularMoviesCollectionFooterIdentifier = "popularMoviesCollectionFooterIdentifier"
     }
-    struct ImageURL {
+    enum ImageURL {
         static let highQuality = "https://image.tmdb.org/t/p/w780"
         static let mediumQuality = "https://image.tmdb.org/t/p/w342"
         static let lowQuality = "https://image.tmdb.org/t/p/w154"
