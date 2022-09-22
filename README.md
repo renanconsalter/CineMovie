@@ -13,8 +13,9 @@
 The project consists in a application to list and get details of movies around the world.
 
 You can navigate between Top Rated, Popular or Search movies.
-    
+
 All the information and data used in this project came from the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction).
+
 </p>
 </div>
 </div>
