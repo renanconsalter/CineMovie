@@ -17,6 +17,7 @@ All the information and data used in this project came from the [TMDB API](https
 </p>
 </div>
 </div>
+<br>
 
 ## Features
 
