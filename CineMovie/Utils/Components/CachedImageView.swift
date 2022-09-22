@@ -25,13 +25,12 @@ final class CachedImageView: UIImageView {
             image = cachedImage
             return
         }
-        
-        getData(from: url) { [weak self] (data, _, _) in
+
+        getData(from: url) { [weak self] data, _, _ in
             guard let self = self else { return }
-            
+
             let image: UIImage? = {
-                if let data = data,
-                   let downloadedImage = UIImage(data: data) {
+                if let data = data, let downloadedImage = UIImage(data: data) {
                     imageCache.setObject(downloadedImage, forKey: NSString(string: url.absoluteString))
                     return downloadedImage
                 }

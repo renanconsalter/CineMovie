@@ -12,14 +12,13 @@ protocol SearchMoviesCoordinatorProtocol: AnyObject {
 }
 
 final class SearchMoviesCoordinator: Coordinator {
-    
     // MARK: Properties
-    
+
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    
+
     private let navigationController: UINavigationController = .init()
-    
+
     var rootViewController: UIViewController {
         navigationController.tabBarItem = UITabBarItem(
             title: Constants.Menus.search,
@@ -28,15 +27,15 @@ final class SearchMoviesCoordinator: Coordinator {
         )
         return navigationController
     }
-    
+
     // MARK: Methods
-    
+
     private func makeViewController() -> SearchMoviesViewController {
         let viewModel = SearchMoviesViewModel()
         viewModel.coordinator = self
         return SearchMoviesViewController(viewModel: viewModel)
     }
-    
+
     func start() {
         navigationController.pushViewController(self.makeViewController(), animated: false)
     }
@@ -55,4 +54,3 @@ extension SearchMoviesCoordinator: SearchMoviesCoordinatorProtocol {
         movieDetailsCoordinator.start()
     }
 }
-

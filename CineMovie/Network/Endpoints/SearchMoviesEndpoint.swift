@@ -18,14 +18,14 @@ extension SearchMoviesEndpoint: Endpoint {
             return "/search/movie"
         }
     }
-    
+
     var method: HTTPMethod {
         switch self {
         case .searchMovie:
             return .get
         }
     }
-    
+
     var queryParams: [URLQueryItem] {
         switch self {
         case .searchMovie(let query):
