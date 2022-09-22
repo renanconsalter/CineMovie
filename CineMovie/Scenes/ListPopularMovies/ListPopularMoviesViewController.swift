@@ -8,9 +8,8 @@
 import UIKit
 
 final class ListPopularMoviesViewController: UIViewController {
-    
     // MARK: Properties
-    
+
     private let viewModel: ListPopularMoviesViewModel
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -24,31 +23,31 @@ final class ListPopularMoviesViewController: UIViewController {
         collectionView.register(
             UICollectionReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: Constants.Identifiers.popularMoviesCollectionViewFooterIdentifier
+            withReuseIdentifier: Constants.Identifiers.popularMoviesCollectionFooterIdentifier
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
-    
+
     private let collectionViewFooter: UICollectionReusableView = {
         let view = UICollectionReusableView()
         return view
     }()
-    
+
     // MARK: Initialization
-    
+
     init(viewModel: ListPopularMoviesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
@@ -57,13 +56,13 @@ final class ListPopularMoviesViewController: UIViewController {
         configureTitle()
         loadData()
     }
-    
+
     // MARK: Configuration/Setup
-    
+
     private func configureViews() {
         view.addSubview(collectionView)
     }
-    
+
     private func configureConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -72,19 +71,19 @@ final class ListPopularMoviesViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
+
     private func configureDelegates() {
         collectionView.delegate = self
         collectionView.dataSource = self
         viewModel.delegate = self
     }
-    
+
     private func configureTitle() {
         viewModel.setNavigationTitle()
     }
-    
+
     // MARK: Data Manipulation Methods
-    
+
     private func loadData() {
         viewModel.loadPopularMovies()
     }
@@ -96,26 +95,26 @@ extension ListPopularMoviesViewController: UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfRows()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: String(describing: PopularMoviesCell.self),
             for: indexPath
         ) as? PopularMoviesCell
         else { return UICollectionViewCell() }
-        
+
         let movie = viewModel.getMovie(at: indexPath)
         let movieCellViewModel = PopularMoviesCellViewModel(movie: movie)
-        
+
         cell.setup(with: movieCellViewModel)
-        
+
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSelectItem(at: indexPath)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let lastSection = collectionView.numberOfSections - 1
         let lastItem = collectionView.numberOfItems(inSection: lastSection) - 1
@@ -133,7 +132,7 @@ extension ListPopularMoviesViewController {
         case UICollectionView.elementKindSectionFooter:
             let footer = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionFooter,
-                withReuseIdentifier: String(describing: Constants.Identifiers.popularMoviesCollectionViewFooterIdentifier),
+                withReuseIdentifier: String(describing: Constants.Identifiers.popularMoviesCollectionFooterIdentifier),
                 for: indexPath
             )
             collectionViewFooter.frame = CGRect(x: 0, y: 0, width: footer.frame.size.width, height: 100)
@@ -143,7 +142,7 @@ extension ListPopularMoviesViewController {
             return UICollectionReusableView()
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize.init(width: view.frame.size.width, height: 100)
     }
@@ -154,22 +153,22 @@ extension ListPopularMoviesViewController {
 extension ListPopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let aspectRatio: CGFloat = 3 / 2  // A movie poster has 3:2 dimension, so aspect ratio is 1.5
-        
+
         let numberOfItemsInRow: CGFloat = 3
 
         let collectionViewCellSizeWidth: CGFloat = (view.frame.size.width / numberOfItemsInRow)
         let collectionViewCellSizeHeight: CGFloat = collectionViewCellSizeWidth * aspectRatio
-        
+
         return CGSize(
             width: collectionViewCellSizeWidth,
             height: collectionViewCellSizeHeight
         )
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -184,7 +183,7 @@ extension ListPopularMoviesViewController: ListPopularMoviesViewModelDelegate, L
             self.showSpinner(on: self.view)
         }
     }
-    
+
     func hideLoading() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -192,20 +191,20 @@ extension ListPopularMoviesViewController: ListPopularMoviesViewModelDelegate, L
             self.removeSpinner(on: self.collectionViewFooter)
         }
     }
-    
+
     func showPaginationLoading() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.showSpinner(on: self.collectionViewFooter, size: .medium)
         }
     }
-    
+
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }
-    
+
     func didFail(with error: ErrorHandler) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -215,10 +214,8 @@ extension ListPopularMoviesViewController: ListPopularMoviesViewModelDelegate, L
             )
         }
     }
-    
+
     func setNavigationTitle(to value: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.title = value
-        }
+        self.title = value
     }
 }

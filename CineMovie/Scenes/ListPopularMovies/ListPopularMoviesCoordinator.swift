@@ -12,14 +12,13 @@ protocol ListPopularMoviesCoordinatorProtocol: AnyObject {
 }
 
 final class ListPopularMoviesCoordinator: Coordinator {
-    
     // MARK: Properties
-    
+
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    
+
     private let navigationController: UINavigationController = .init()
-    
+
     var rootViewController: UIViewController {
         navigationController.tabBarItem = UITabBarItem(
             title: Constants.Menus.popular,
@@ -29,15 +28,15 @@ final class ListPopularMoviesCoordinator: Coordinator {
         navigationController.navigationBar.prefersLargeTitles = true
         return navigationController
     }
-    
+
     // MARK: Methods
-    
+
     private func makeViewController() -> ListPopularMoviesViewController {
         let viewModel = ListPopularMoviesViewModel()
         viewModel.coordinator = self
         return ListPopularMoviesViewController(viewModel: viewModel)
     }
-    
+
     func start() {
         navigationController.pushViewController(self.makeViewController(), animated: false)
     }

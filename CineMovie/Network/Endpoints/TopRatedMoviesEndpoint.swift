@@ -18,14 +18,14 @@ extension TopRatedMoviesEndpoint: Endpoint {
             return "/movie/top_rated"
         }
     }
-        
+
     var method: HTTPMethod {
         switch self {
         case .getTopRatedMovies:
             return .get
         }
     }
-    
+
     var queryParams: [URLQueryItem] {
         switch self {
         case .getTopRatedMovies(let page):

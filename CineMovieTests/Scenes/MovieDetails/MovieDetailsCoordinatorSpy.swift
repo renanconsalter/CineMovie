@@ -10,9 +10,7 @@ import XCTest
 @testable import CineMovie
 
 final class MovieDetailsCoordinatorSpy: MovieDetailsCoordinatorProtocol {
-    
     private(set) var dismissMovieDetailsCalled = false
-    
     func dismissMovieDetails() {
         dismissMovieDetailsCalled = true
     }

@@ -12,7 +12,7 @@ struct MoviesResponse: Decodable {
     let totalPages: Int
     let totalResults: Int
     let results: [Movie]
-    
+
     enum CodingKeys: String, CodingKey {
         case page
         case results

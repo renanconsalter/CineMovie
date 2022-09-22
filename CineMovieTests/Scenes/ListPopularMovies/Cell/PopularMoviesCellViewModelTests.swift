@@ -10,9 +10,8 @@ import XCTest
 @testable import CineMovie
 
 final class PopularMoviesCellViewModelTests: XCTestCase {
-    
     // MARK: PosterPath Image
-    
+
     func test_popularMoviesCell_whenPosterPathIsValid_and_notNil() {
         // Given
         let posterImagePathBaseURL = Constants.ImageURL.mediumQuality
@@ -20,28 +19,28 @@ final class PopularMoviesCellViewModelTests: XCTestCase {
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: posterPathToTest)
         )
-        
+
         // When
         let viewModelPosterImageURL = viewModelToTest.posterImageURL
         let completePosterImageURL = posterImagePathBaseURL + posterPathToTest
-        
+
         // Then
         XCTAssertNotNil(posterPathToTest)
         XCTAssertNotNil(posterImagePathBaseURL)
-        
+
         XCTAssertEqual(completePosterImageURL, viewModelPosterImageURL)
     }
-    
+
     func test_popularMoviesCell_whenPosterPathIsNil_or_doesntExist_shouldReturnPlaceholder() {
         // Given
         let posterPlaceholder = Constants.ImageURL.posterPlaceholder
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: nil)
         )
-        
+
         // When
         let viewModelPosterImageURL = viewModelToTest.posterImageURL
-        
+
         // Then
         XCTAssertNotNil(posterPlaceholder)
         XCTAssertEqual(posterPlaceholder, viewModelPosterImageURL)
