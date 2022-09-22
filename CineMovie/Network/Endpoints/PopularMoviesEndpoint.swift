@@ -18,14 +18,14 @@ extension PopularMoviesEndpoint: Endpoint {
             return "/movie/popular"
         }
     }
-    
+
     var method: HTTPMethod {
         switch self {
         case .getPopularMovies:
             return .get
         }
     }
-    
+
     var queryParams: [URLQueryItem] {
         switch self {
         case .getPopularMovies(let page):

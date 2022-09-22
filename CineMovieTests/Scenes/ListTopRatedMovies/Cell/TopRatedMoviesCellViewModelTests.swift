@@ -10,9 +10,8 @@ import XCTest
 @testable import CineMovie
 
 final class TopRatedMoviesCellViewModelTests: XCTestCase {
-    
     // MARK: PosterPath Image
-    
+
     func test_topRatedMoviesCell_whenPosterPathIsValid_and_notNil() {
         // Given
         let posterImageBaseURL = Constants.ImageURL.lowQuality
@@ -20,53 +19,53 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: posterPathToTest)
         )
-        
+
         // When
         let viewModelPosterImageURL = viewModelToTest.posterImageURL
         let completePosterImageURL = posterImageBaseURL + posterPathToTest
-        
+
         // Then
         XCTAssertNotNil(posterPathToTest)
         XCTAssertNotNil(posterImageBaseURL)
         XCTAssertNotNil(completePosterImageURL)
-    
+
         XCTAssertEqual(completePosterImageURL, viewModelPosterImageURL)
     }
-    
+
     func test_topRatedMoviesCell_whenPosterPathIsNil_or_doesntExist_shouldReturnPlaceholder() {
         // Given
         let posterPlaceholder = Constants.ImageURL.posterPlaceholder
         let viewModelToTest = createSUT(
             with: Movie.fixture(posterPath: nil)
         )
-        
+
         // When
         let viewModelPosterImageURL = viewModelToTest.posterImageURL
-        
+
         // Then
         XCTAssertNotNil(posterPlaceholder)
         XCTAssertEqual(posterPlaceholder, viewModelPosterImageURL)
     }
-    
+
     // MARK: Title
-    
+
     func test_topRatedMoviesCell_title() {
         // Given
         let titleToTest = "The Godfather"
         let viewModelToTest = createSUT(
             with: Movie.fixture(title: titleToTest)
         )
-        
+
         // When
         let viewModelTitle = viewModelToTest.title
-        
+
         // Then
         XCTAssertNotNil(titleToTest)
         XCTAssertEqual(titleToTest, viewModelTitle)
     }
-    
+
     // MARK: Subtitle
-    
+
     func test_topRatedMoviesCell_subtitle_createdBasedOnGenreIds_and_notNil() {
         // Given
         let genresWithIDs = [
@@ -78,31 +77,31 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
             with: Movie.fixture(genreIds: Array(genresWithIDs.values))
         )
         let genreNames = Array(genresWithIDs.keys).joined(separator: ", ")
-        
+
         // When
         let viewModelSubtitle = viewModelToTest.subtitle
-        
+
         // Then
         XCTAssertNotNil(genresWithIDs)
         XCTAssertNotNil(genreNames)
         XCTAssertEqual(genreNames, viewModelSubtitle)
     }
-    
+
     func test_topRatedMoviesCell_subtitle_whenGenresIsNil_or_doesntExist() {
         // Given
         let viewModelToTest = createSUT(
             with: Movie.fixture(genreIds: nil)
         )
-        
+
         // When
         let viewModelSubtitle = viewModelToTest.subtitle
-        
+
         // Then
         XCTAssertEqual(Constants.notAvailable, viewModelSubtitle)
     }
-    
+
     // MARK: Rating
-    
+
     func test_topRatedMoviesCell_rating() {
         // Given
         let ratingToTest = 8.7
@@ -110,10 +109,10 @@ final class TopRatedMoviesCellViewModelTests: XCTestCase {
             with: Movie.fixture(voteAverage: ratingToTest)
         )
         let stringConvertedRatingToTest = String(ratingToTest)
-        
+
         // When
         let viewModelRating = viewModelToTest.rating
-        
+
         // Then
         XCTAssertNotNil(ratingToTest)
         XCTAssertNotNil(stringConvertedRatingToTest)

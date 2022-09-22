@@ -18,7 +18,7 @@ struct Movie: Decodable {
     let voteAverage: Double
     let backdropPath: String?
     let posterPath: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case title

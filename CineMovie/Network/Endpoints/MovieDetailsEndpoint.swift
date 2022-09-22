@@ -18,7 +18,7 @@ extension MovieDetailsEndpoint: Endpoint {
             return "/movie/\(id)"
         }
     }
-    
+
     var method: HTTPMethod {
         switch self {
         case .getMovie:

@@ -16,7 +16,7 @@ final class SearchMoviesViewModelTests: XCTestCase {
     private lazy var sut = SearchMoviesViewModel(
         service: serviceSpy
     )
-    
+
     func test_getMovieAtIndexPath_shouldReturnMovie() {
         // Given
         serviceSpy.searchMovieToBeReturned = .success(
@@ -24,19 +24,19 @@ final class SearchMoviesViewModelTests: XCTestCase {
                 results: [
                     Movie.fixture(title: "The Godfather"),
                     Movie.fixture(title: "The Batman"),
-                    Movie.fixture(title: "The Joker"),
+                    Movie.fixture(title: "The Joker")
                 ]
             )
         )
-        
+
         // When
         sut.searchMovies(with: "The")
         let movie = sut.getMovie(at: IndexPath.init(row: 2, section: 1))
-        
+
         // Then
         XCTAssertEqual(movie, Movie.fixture(title: "The Joker"))
     }
-    
+
     func test_numberofRows_shouldReturnDataSourceCount() {
         // Given
         serviceSpy.searchMovieToBeReturned = .success(
@@ -45,11 +45,11 @@ final class SearchMoviesViewModelTests: XCTestCase {
                     Movie.fixture(),
                     Movie.fixture(),
                     Movie.fixture(),
-                    Movie.fixture(),
+                    Movie.fixture()
                 ]
             )
         )
-        
+
         // When
         sut.searchMovies(with: "A")
         let numberOfRows = sut.numberOfRows()
@@ -57,20 +57,20 @@ final class SearchMoviesViewModelTests: XCTestCase {
         // Then
         XCTAssertEqual(numberOfRows, 4)
     }
-    
+
     func test_setNavigationTitle_shouldSetTitleOnViewController() {
         // Given
         let title = "Search"
         sut.delegate = delegateSpy
-        
+
         // When
         sut.setNavigationTitle()
-        
+
         // Then
         XCTAssertTrue(delegateSpy.setNavigationTitleCalled)
         XCTAssertEqual(delegateSpy.setNavigationTitleValuePassed, title)
     }
-    
+
     func test_didSelectRowAtIndexPath_shouldNavigateToDetails_usingCoordinator() {
         // Given
         sut.coordinator = coordinatorSpy
@@ -79,45 +79,45 @@ final class SearchMoviesViewModelTests: XCTestCase {
                 results: [
                     Movie.fixture(title: "The Godfather"),
                     Movie.fixture(title: "The Batman"),
-                    Movie.fixture(title: "The Shawshank Redemption"),
+                    Movie.fixture(title: "The Shawshank Redemption")
                 ]
             )
         )
-        
+
         // When
         sut.searchMovies(with: "The")
         sut.didSelectRow(at: IndexPath.init(row: 1, section: 1))
-        
+
         // Then
         XCTAssertTrue(coordinatorSpy.goToMovieDetailsCalled)
         XCTAssertEqual(coordinatorSpy.goToMovieDetailsPassed?.title, "The Batman")
     }
-    
+
     func test_searchMovies_shouldCallServiceSearchMovies() {
         // Given
         let movieName = "The Godfather"
-        
+
         // When
         sut.searchMovies(with: movieName)
-        
+
         // Then
         XCTAssertEqual(serviceSpy.searchMovieQueryPassed, "The Godfather")
         XCTAssertTrue(serviceSpy.searchMovieCalled)
     }
-    
+
     func test_searchMovies_shouldCallServiceSearchMovies_titleCountTimes() {
         // Given
         let title = "Batman"
 
         // When
         sut.searchMovies(with: title)
-        
+
         // Then
         XCTAssertEqual(serviceSpy.searchMovieQueryPassed, "Batman")
         XCTAssertEqual(serviceSpy.searchMovieCallCount, 1)
         XCTAssertEqual(serviceSpy.searchMovieQueryPassedCharacterCount, title.count)
     }
-    
+
     func test_searchMovies_shouldTrigger_showEmptyState() {
         // Given
         sut.delegate = delegateSpy
@@ -128,7 +128,7 @@ final class SearchMoviesViewModelTests: XCTestCase {
         // Then
         XCTAssertTrue(delegateSpy.showEmptyStateCalled)
     }
-    
+
     func test_searchMovies_shouldTrigger_showNoResultsState() {
         // Given
         serviceSpy.searchMovieToBeReturned = .success(
@@ -146,7 +146,7 @@ final class SearchMoviesViewModelTests: XCTestCase {
         XCTAssertEqual(serviceSpy.searchMovieQueryPassed, "no_results")
         XCTAssertTrue(delegateSpy.hideLoadingCalled)
     }
-    
+
     func test_searchMovies_shouldTrigger_reloadData() {
         // Given
         serviceSpy.searchMovieToBeReturned = .success(
@@ -156,7 +156,7 @@ final class SearchMoviesViewModelTests: XCTestCase {
                     Movie.fixture(title: "Impossible Things"),
                     Movie.fixture(title: "Parasite"),
                     Movie.fixture(title: "The Green Mile"),
-                    Movie.fixture(title: "The Dark Knight"),
+                    Movie.fixture(title: "The Dark Knight")
                 ]
             )
         )
@@ -170,7 +170,7 @@ final class SearchMoviesViewModelTests: XCTestCase {
         XCTAssertEqual(serviceSpy.searchMovieQueryPassed, "i")
         XCTAssertTrue(delegateSpy.hideLoadingCalled)
     }
-    
+
     func test_searchMovies_shouldTrigger_didFail_withError() {
         // Given
         let fakeError = ErrorHandler.unknown
