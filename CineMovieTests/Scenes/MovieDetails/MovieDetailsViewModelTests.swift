@@ -285,7 +285,7 @@ final class MovieDetailsViewModelTests: XCTestCase {
         let viewModelScore = viewModelToTest.score
 
         // Then
-        XCTAssertEqual(Constants.notAvailable, viewModelScore)
+        XCTAssertEqual(String(), viewModelScore)
     }
 
     func test_getMovie_shouldCallServiceGetMovie_oneTimeOnly() {
