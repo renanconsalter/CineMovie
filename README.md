@@ -7,7 +7,7 @@
   </div>
   <div>
     
-![Build/Test Workflow](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml/badge.svg)
+[![Build & Test](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml/badge.svg)](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml) [![SwiftLint](https://github.com/renanconsalter/CineMovie/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/renanconsalter/CineMovie/actions/workflows/swiftlint.yml)
 
 CineMovie is an iOS app to list and show details of movies around the world.
 
