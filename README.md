@@ -10,7 +10,7 @@
     
 ![Build/Test Workflow](https://github.com/renanconsalter/CineMovie/actions/workflows/ios.yml/badge.svg)
 
-The project consists in a application to list and get details of movies around the world.
+CineMovie is an iOS app to list and show details of movies around the world.
 
 You can navigate between Top Rated, Popular or Search movies.
 
