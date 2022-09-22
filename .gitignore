@@ -2,11 +2,14 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+## Property list (.plist) file containing secret API key 
+CineMovie/TMDBAuth-Info.plist
+
 ## User settings
 xcuserdata/
 
-# Ignore Mac DS_Store files
-.DS_Store
+## macOS DS_Store files
+**/.DS_Store
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
